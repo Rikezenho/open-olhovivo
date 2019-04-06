@@ -11,9 +11,13 @@ Conta com uma API em Node.js e um front-end em Vue.js.
 - [x] Método para chamar a API de posição da linha
 - [x] Método para chamar a API de previsão da linha
 - [x] Criação da API com Express e as rotas
+- [ ] Unit tests
+- [ ] Integration tests
 
 ### To-do (front-end):
-- [] Estruturar o front-end
-- [] Estilizar
-- [] Criar localStorage para guardar os favoritos
-- [] Realizar a comunicação deste com a API
+- [ ] Estruturar o front-end
+- [ ] Estilizar
+- [ ] Criar localStorage para guardar os favoritos
+- [ ] Realizar a comunicação deste com a API
+- [ ] Unit tests com Jest
+- [ ] E2E tests com CodeceptJS
