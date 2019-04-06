@@ -17,6 +17,7 @@ Conta com uma API em Node.js e um front-end em Vue.js.
 ### To-do (front-end):
 - [ ] Estruturar o front-end
 - [ ] Estilizar
+- [ ] Aplicar o Google Maps (ou qualquer outra API de mapa que disponibilize overlay e posicionamento de marcadores)
 - [ ] Criar localStorage para guardar os favoritos
 - [ ] Realizar a comunicação deste com a API
 - [ ] Unit tests com Jest
