@@ -1,34 +1,19 @@
-# open-olhovivo
+# Open OlhoVivo
 
-## Project setup
-```
-yarn install
-```
+Projeto criado com o intuito de disponibilizar uma API simples, que se utiliza do próprio site da [Olho Vivo](http://olhovivo.sptrans.com.br) da SPTrans para buscar as informações das linhas.
 
-### Compiles and hot-reloads for development
-```
-yarn run serve
-```
+Conta com uma API em Node.js e um front-end em Vue.js.
 
-### Compiles and minifies for production
-```
-yarn run build
-```
+## THIS IS A WORK IN PROGRESS!
 
-### Run your tests
-```
-yarn run test
-```
+### To-do (back-end):
+- [x] Método para chamar a API de busca de linhas
+- [x] Método para chamar a API de posição da linha
+- [x] Método para chamar a API de previsão da linha
+- [x] Criação da API com Express e as rotas
 
-### Lints and fixes files
-```
-yarn run lint
-```
-
-### Run your unit tests
-```
-yarn run test:unit
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### To-do (front-end):
+- [] Estruturar o front-end
+- [] Estilizar
+- [] Criar localStorage para guardar os favoritos
+- [] Realizar a comunicação deste com a API
