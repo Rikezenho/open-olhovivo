@@ -21,6 +21,8 @@ app.get('/searchLines/:term', async (req, res) => {
 app.use('/lines', linesRoute);
 app.use('/linesSpTrans', linesSpTransRoute);
 
-app.listen(3000, () => {
-  console.log('API is running...');
+app.get('*', (req, res) => {
+  res.json(error('No route specified!'));
 });
+
+module.exports = app;

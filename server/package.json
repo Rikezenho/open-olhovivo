@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "nodemon server.js",
+    "deploy": "now"
   },
   "dependencies": {
     "@3846masa/axios-cookiejar-support": "^0.4.2",
