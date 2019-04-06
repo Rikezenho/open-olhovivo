@@ -22,3 +22,21 @@ Conta com uma API em Node.js e um front-end em Vue.js.
 - [ ] Realizar a comunicação deste com a API
 - [ ] Unit tests com Jest
 - [ ] E2E tests com CodeceptJS
+
+---
+
+# Como utilizar
+
+Clone o projeto, instale as dependências (basta rodar `yarn` na raiz do projeto, pois este projeto utiliza de Yarn Workspaces) e utilize os npm scripts para rodar o projeto:
+
+```json
+"scripts": {
+    "serve": "vue-cli-service serve",
+    "api": "cd server && yarn start",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "test:unit": "vue-cli-service test:unit",
+    "start:all": "concurrently --kill-others --prefix-colors bgCyan,bgMagenta \"npm:serve\" \"npm:api\"",
+    "buildAndStartServer:all": "concurrently --kill-others --prefix-colors bgCyan,bgMagenta \"npm:build\" \"npm:api\""
+}
+```
