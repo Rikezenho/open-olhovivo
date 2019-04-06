@@ -29,8 +29,8 @@ const singleton = () => {
       .catch(e => reject(new Error(e)));
   });
 
-  const getCredentialsSpTrans = codigoLinha => new Promise((resolve, reject) => {
-    axios.get(configs.urlSpTransLinha(codigoLinha), {
+  const getCredentialsSpTrans = () => new Promise((resolve, reject) => {
+    axios.get(configs.sptrans.BASE_URL, {
       jar: cookieJar,
       withCredentials: true,
     })

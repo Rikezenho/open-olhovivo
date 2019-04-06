@@ -7,7 +7,8 @@ router.get('/', (req, res) => res.json(error('Please specify a route!')));
 
 router.get('/:lineNumber/route/:direction', async (req, res) => {
   const { lineNumber, direction } = req.params;
-  const route = await api.getLineRoute(lineNumber, direction);
+  const numberDirection = direction === 'going' ? 1 : 2;
+  const route = await api.getLineRoute(lineNumber, numberDirection);
 
   res.json(success(route));
 });
