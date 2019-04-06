@@ -22,6 +22,10 @@ Conta com uma API em Node.js e um front-end em Vue.js.
 - [ ] Realizar a comunicação deste com a API
 - [ ] Unit tests com Jest
 - [ ] E2E tests com CodeceptJS
+- [ ] Transformar em um app PWA
+
+### To-do (geral):
+- [ ] Hospedar a aplicação - Now, Heroku ou Netlify
 
 ---
 
