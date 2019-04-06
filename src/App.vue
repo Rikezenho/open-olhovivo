@@ -15,18 +15,18 @@
     </v-toolbar>
 
     <v-content>
-      <HelloWorld/>
+      <open-olho-vivo-map lineId="1972" lineNumber="5106-21" lineDirection="going" />
     </v-content>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue';
+import OpenOlhoVivoMap from './components/OpenOlhoVivoMap.vue';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld,
+    OpenOlhoVivoMap,
   },
   data() {
     return {
