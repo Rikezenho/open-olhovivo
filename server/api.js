@@ -29,6 +29,19 @@ const singleton = () => {
       .catch(e => reject(new Error(e)));
   });
 
+  const getCredentialsSpTrans = codigoLinha => new Promise((resolve, reject) => {
+    axios.get(configs.urlSpTransLinha(codigoLinha), {
+      jar: cookieJar,
+      withCredentials: true,
+    })
+      .then((response) => {
+        if (response.data) {
+          resolve(response.data);
+        }
+      })
+      .catch(e => reject(new Error(e)));
+  });
+
   const searchBusLine = search => new Promise(
     async (resolve, reject) => {
       await getCredentials().catch(e => reject(e));
@@ -89,11 +102,33 @@ const singleton = () => {
     },
   );
 
+  const getLineRoute = (lineNumber, direction) => new Promise(
+    async (resolve, reject) => {
+      await getCredentialsSpTrans().catch(e => reject(e));
+
+      const URL = configs.urlSpTransLinhaRota(lineNumber, direction);
+      axios.get(URL, {
+        jar: cookieJar,
+        withCredentials: true,
+      })
+        .then((response) => {
+          if (response.data) {
+            resolve(response.data);
+          } else {
+            reject();
+          }
+        })
+        .catch(e => reject(new Error(e)));
+    },
+  );
+
   return {
     getCredentials,
+    getCredentialsSpTrans,
     searchBusLine,
     getLineSchedule,
     getLinePosition,
+    getLineRoute,
   };
 };
 

@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 
 const api = require('./api')();
 const linesRoute = require('./routes/lines');
+const linesSpTransRoute = require('./routes/linesSpTrans');
 const { success, error } = require('./utils');
 
 const app = express();
@@ -18,6 +19,7 @@ app.get('/searchLines/:term', async (req, res) => {
 });
 
 app.use('/lines', linesRoute);
+app.use('/linesSpTrans', linesSpTransRoute);
 
 app.listen(3000, () => {
   console.log('API is running...');
