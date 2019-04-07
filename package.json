@@ -29,13 +29,13 @@
     "core-js": "^2.6.5",
     "express": "^4.16.4",
     "leaflet": "^1.4.0",
-    "lodash": "^4.17.11",
     "register-service-worker": "^1.6.2",
     "vue": "^2.6.6",
     "vue-router": "^3.0.1",
     "vue2-leaflet": "^2.0.3",
     "vuetify": "^1.5.5",
-    "vuex": "^3.0.1"
+    "vuex": "^3.0.1",
+    "vuex-persistedstate": "^2.5.4"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.5.0",
