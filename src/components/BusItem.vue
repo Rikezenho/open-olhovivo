@@ -40,10 +40,10 @@ export default {
   methods: {
     selectLine(line) {
       this.$store.dispatch(constants.TOGGLE_SEARCH);
-      const lineBack = this.getLineBack(line);
+      const toggleLine = this.getLineBack(line);
       this.$store.dispatch(constants.SELECT_LINE, {
         ...line,
-        lineBack,
+        toggleLine,
       });
       if (typeof this.onClick === 'function') {
         this.onClick();
@@ -75,10 +75,10 @@ export default {
       }
     },
     saveFavoriteLine(line) {
-      const lineBack = normalizeLineData(this.getLineBack(line));
+      const toggleLine = normalizeLineData(this.getLineBack(line));
       this.$store.dispatch(constants.SAVE_FAVORITE_LINE, {
         ...line,
-        lineBack,
+        toggleLine,
       });
     },
     removeFavoriteLine(lineId) {

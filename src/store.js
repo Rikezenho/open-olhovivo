@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import createPersistedState from "vuex-persistedstate";
+import createPersistedState from 'vuex-persistedstate';
 import api from './utils/api';
 
 Vue.use(Vuex);
@@ -51,10 +51,11 @@ export default new Vuex.Store({
       Vue.set(state, 'selectedLine', payload);
     },
     [constants.TOGGLE_LINE_DIRECTION](state) {
-      const oldSelectedLine = state.selectedLine;
-      Vue.set(state, 'selectedLine', state.selectedLine.toggleLine);
-      delete oldSelectedLine.toggleLine;
-      Vue.set(state.selectedLine, 'toggleLine', oldSelectedLine);
+      const lineToSaveWithoutToggleLine = { ...state.selectedLine };
+      delete lineToSaveWithoutToggleLine.toggleLine;
+      const newLine = Object.assign({}, state.selectedLine.toggleLine);
+      newLine.toggleLine = lineToSaveWithoutToggleLine;
+      Vue.set(state, 'selectedLine', newLine);
     },
     [constants.GET_LINE_ROUTE](state, payload) {
       Vue.set(state, 'latLngPaths', payload);

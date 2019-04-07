@@ -26,37 +26,18 @@
       v-model="fab"
       :bottom="true"
       :right="true"
-      direction="top"
-      transition="slide-y-reverse-transition"
     >
       <template v-slot:activator>
         <v-btn
-          v-model="fab"
-          color="indigo darken-2"
-          dark
           fab
+          dark
+          small
+          color="indigo"
+          @click="toggleDirection"
         >
-          <v-icon>arrow_drop_up</v-icon>
-          <v-icon>close</v-icon>
+          <v-icon>swap_horiz</v-icon>
         </v-btn>
       </template>
-      <v-btn
-        fab
-        dark
-        small
-        color="green"
-      >
-        <v-icon>star_border</v-icon>
-      </v-btn>
-      <v-btn
-        fab
-        dark
-        small
-        color="indigo"
-        @click="toggleDirection"
-      >
-        <v-icon>swap_horiz</v-icon>
-      </v-btn>
     </v-speed-dial>
   </v-container>
 </template>
