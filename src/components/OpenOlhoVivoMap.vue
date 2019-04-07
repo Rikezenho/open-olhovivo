@@ -7,7 +7,7 @@
       <l-control class="custom-control">
         <p @click="loadMapAdditionalData"><v-icon>refresh</v-icon></p>
       </l-control>
-      <l-polyline :lat-lngs="[currentLine().latLngPaths]" />
+      <l-polyline :lat-lngs="[latLngPaths()]" />
       <l-tile-layer
       :key="tileProvider.name"
       :name="tileProvider.name"
@@ -136,10 +136,13 @@ export default {
     vehicles() {
       return this.$store.getters.positions;
     },
+    latLngPaths() {
+      return this.$store.getters.latLngPaths;
+    },
   },
   computed: {
     latLngPathsObject() {
-      return this.currentLine().latLngPaths.map(
+      return this.latLngPaths().map(
         latLng => ({ lat: latLng[0], lng: latLng[1] }),
       );
     },

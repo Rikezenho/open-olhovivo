@@ -11,6 +11,21 @@
         <v-list-tile>
             <v-list-tile-title>Open OlhoVivo</v-list-tile-title>
         </v-list-tile>
+        <v-list-group
+        prepend-icon="star"
+        value="true"
+        v-if="favorites().length">
+          <template v-slot:activator>
+            <v-list-tile>
+              <v-list-tile-title>Favoritos</v-list-tile-title>
+            </v-list-tile>
+          </template>
+          <v-bus-item
+          v-for="favorite in favorites()"
+          :key="favorite.lineId"
+          :line="favorite"
+          :onClick="closeDrawer" />
+        </v-list-group>
         <v-list-tile :href="repositoryUrl" target="_blank">
             <v-list-tile-action>
               <v-icon>open_in_new</v-icon>
@@ -26,13 +41,17 @@
       </v-toolbar-title>
       <v-spacer />
       <v-toolbar-items dense>
-        <v-btn flat @click="buscaLinhasDialog = true"><v-icon>search</v-icon></v-btn>
+        <v-btn flat @click="searchDialog = true"><v-icon>search</v-icon></v-btn>
       </v-toolbar-items>
     </v-toolbar>
-    <v-dialog v-model="buscaLinhasDialog" fullscreen hide-overlay transition="dialog-bottom-transition">
+    <v-dialog
+    v-model="searchDialog"
+    fullscreen
+    hide-overlay
+    transition="dialog-bottom-transition">
       <v-card>
         <v-toolbar dark color="primary">
-          <v-btn icon dark @click="buscaLinhasDialog = false">
+          <v-btn icon dark @click="closeSearchDialog">
             <v-icon>close</v-icon>
           </v-btn>
           <v-toolbar-title>Busca de linhas</v-toolbar-title>
@@ -59,20 +78,11 @@
         <v-divider></v-divider>
         <v-list three-line subheader v-if="linesFound().length">
           <v-subheader>Resultados encontrados</v-subheader>
-          <v-list-tile avatar v-for="line in linesFound()" :key="line.cl" @click="selectLine(line)">
-            <v-list-tile-avatar>
-              <v-icon>directions_bus</v-icon>
-            </v-list-tile-avatar>
-            <v-list-tile-content>
-              <v-list-tile-title>
-                {{ line.lt }}-{{ line.tl }} - {{ line.sl === 1 ? 'IDA' : 'VOLTA' }} {{ line.lc ? '(CIRCULAR)' : '' }}
-              </v-list-tile-title>
-              <v-list-tile-sub-title>
-                ORIGEM: {{ line.sl === 1 ? line.tp : line.ts }}<br/>
-                DESTINO: {{ line.sl === 1 ? line.ts : line.tp }}
-              </v-list-tile-sub-title>
-            </v-list-tile-content>
-          </v-list-tile>
+          <v-bus-item
+          v-for="line in linesFound()"
+          :key="line.cl"
+          :line="line"
+          :onClick="closeSearchDialog" />
         </v-list>
       </v-card>
     </v-dialog>
@@ -82,18 +92,19 @@
 <script>
 import { repository } from '../../package.json';
 import { constants } from '../store';
-import functions from '../utils/functions';
-
-const { normalizeLineData } = functions;
+import BusItem from '../components/BusItem.vue';
 
 export default {
   name: 'Header',
+  components: {
+    'v-bus-item': BusItem,
+  },
   data() {
     return {
       search: '',
       drawer: false,
       repositoryUrl: repository.url,
-      buscaLinhasDialog: false,
+      searchDialog: this.$store.getters.searchDialog,
     };
   },
   methods: {
@@ -108,17 +119,14 @@ export default {
     linesFound() {
       return this.$store.getters.linesFound;
     },
-    selectLine(line) {
-      this.buscaLinhasDialog = false;
-      const lines = this.linesFound();
-      const lineBack = lines.filter(item => item.lt === line.lt
-        && item.tl === line.tl
-        && item.sl !== line.sl)[0];
-
-      this.$store.dispatch(constants.SELECT_LINE, {
-        going: normalizeLineData(line),
-        back: normalizeLineData(lineBack),
-      });
+    favorites() {
+      return this.$store.getters.favorites;
+    },
+    closeSearchDialog() {
+      this.searchDialog = false;
+    },
+    closeDrawer() {
+      this.drawer = false;
     },
   },
 };
@@ -127,6 +135,10 @@ export default {
 <style lang="scss">
   .v-navigation-drawer {
     z-index: 9999999;
+
+    .v-list__tile--avatar {
+      height: 80px;
+    }
   }
   .v-overlay {
     z-index: 9999998;
@@ -136,5 +148,9 @@ export default {
   }
   .v-toolbar {
     z-index: 9999996;
+
+    .v-toolbar__items .v-btn {
+      min-width: auto;
+    }
   }
 </style>

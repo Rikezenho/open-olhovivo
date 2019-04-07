@@ -7,6 +7,7 @@ Vue.use(Vuex);
 export const constants = {
   BLOCK_UI: 'BLOCK_UI',
   UNBLOCK_UI: 'UNBLOCK_UI',
+  TOGGLE_SEARCH: 'TOGGLE_SEARCH',
   REQUEST_ERROR: 'REQUEST_ERROR',
   SEARCH_LINES: 'SEARCH_LINES',
   SELECT_LINE: 'SELECT_LINE',
@@ -19,11 +20,12 @@ export const constants = {
 
 export default new Vuex.Store({
   state: {
+    latLngPaths: [],
     positions: [],
     linesFound: [],
     selectedLine: {},
-    selectedBackLine: {},
     favorites: [],
+    searchDialog: true,
     isLoading: false,
     error: null,
   },
@@ -34,23 +36,26 @@ export default new Vuex.Store({
     [constants.UNBLOCK_UI](state) {
       Vue.set(state, 'isLoading', false);
     },
+    [constants.TOGGLE_SEARCH](state) {
+      Vue.set(state, 'searchDialog', !state.searchDialog);
+    },
     [constants.REQUEST_ERROR](state, payload) {
       Vue.set(state, 'error', payload);
     },
     [constants.SEARCH_LINES](state, payload) {
       Vue.set(state, 'linesFound', payload);
     },
-    [constants.SELECT_LINE](state, { going, back }) {
-      Vue.set(state, 'selectedLine', going);
-      Vue.set(state, 'selectedBackLine', back);
+    [constants.SELECT_LINE](state, payload) {
+      Vue.set(state, 'selectedLine', payload);
     },
     [constants.TOGGLE_LINE_DIRECTION](state) {
       const oldSelectedLine = state.selectedLine;
-      Vue.set(state, 'selectedLine', state.selectedBackLine);
-      Vue.set(state, 'selectedBackLine', oldSelectedLine);
+      Vue.set(state, 'selectedLine', state.selectedLine.toggleLine);
+      delete oldSelectedLine.toggleLine;
+      Vue.set(state.selectedLine, 'toggleLine', oldSelectedLine);
     },
     [constants.GET_LINE_ROUTE](state, payload) {
-      Vue.set(state.selectedLine, 'latLngPaths', payload);
+      Vue.set(state, 'latLngPaths', payload);
     },
     [constants.GET_LINE_POSITIONS](state, payload) {
       Vue.set(state, 'positions', payload);
@@ -59,7 +64,7 @@ export default new Vuex.Store({
       state.favorites.push(payload);
     },
     [constants.REMOVE_FAVORITE_LINE](state, payload) {
-      Vue.set(state, 'favorites', state.favorites.filter(item => item.id !== payload));
+      Vue.set(state, 'favorites', state.favorites.filter(item => item.lineId !== payload));
     },
   },
   getters: {
@@ -67,6 +72,7 @@ export default new Vuex.Store({
     selectedLine: state => state.selectedLine,
     positions: state => state.positions,
     favorites: state => state.favorites,
+    latLngPaths: state => state.latLngPaths,
     linesFound: state => state.linesFound,
   },
   actions: {
@@ -75,6 +81,9 @@ export default new Vuex.Store({
     },
     [constants.UNBLOCK_UI]({ commit }) {
       commit(constants.UNBLOCK_UI);
+    },
+    [constants.TOGGLE_SEARCH]({ commit }) {
+      commit(constants.TOGGLE_SEARCH);
     },
     [constants.REQUEST_ERROR]({ commit }, payload) {
       commit(constants.REQUEST_ERROR, payload);

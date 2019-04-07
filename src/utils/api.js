@@ -1,5 +1,8 @@
 import axios from 'axios';
 import configs from '../configs';
+import functions from './functions';
+
+const { normalizeLineData } = functions;
 
 const getLineRoute = (lineNumber, direction) => new Promise((resolve, reject) => {
   axios.get(
@@ -39,7 +42,7 @@ const searchLines = term => new Promise((resolve, reject) => {
       if (data.status) {
         const hasData = !!data.data.length;
         if (hasData) {
-          resolve(data.data);
+          resolve(data.data.map(item => normalizeLineData(item)));
         } else {
           reject(new Error('No lines found.'));
         }
