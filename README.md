@@ -29,6 +29,19 @@ Conta com uma API em Node.js e um front-end em Vue.js.
 
 ---
 
+# Endpoints da API
+
+BASE_URL: https://open-olhovivo-api.rikezenho.now.sh
+
+path|método|descrição|
+---|---|---
+/searchLines/:term|GET|Busca as linhas de ônibus e retorna as opções
+/lines/:busLineId/position|GET|Retorna a latitude e longitude dos veículos atuais da linha
+/lines/:busLineId/schedule|GET|Retorna as próximas partidas da linha
+/linesSpTrans/:busLineNumber/route/:direction|GET|Traz os pontos para poder realizer o tracejado da linha no mapa. Este deve ser passado o código visual da linha (ex: `5106-21`) e o sentido (`going` ou `back`)
+
+---
+
 # Como utilizar
 
 Clone o projeto, instale as dependências (basta rodar `yarn` na raiz do projeto, pois este projeto utiliza de Yarn Workspaces) e utilize os npm scripts para rodar o projeto:
