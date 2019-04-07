@@ -1,37 +1,43 @@
 <template>
   <v-app>
-    <v-toolbar app>
-      <v-toolbar-title class="headline text-uppercase">
-        <span>OPEN</span><span class="font-weight-light"> OLHO VIVO</span>
-      </v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-btn
-        flat
-        href="https://github.com/Rikezenho/open-olhovivo"
-        target="_blank"
-      >
-        <span class="mr-2">Fork me on Github!</span>
-      </v-btn>
-    </v-toolbar>
-
+    <v-loading-overlay />
+    <v-header />
     <v-content>
-      <open-olho-vivo-map lineId="1972" lineNumber="5106-21" lineDirection="going" />
+      <v-container fluid>
+        <v-layout
+          text-xs-center
+          wrap
+        >
+          <open-olho-vivo-map v-if="selectedLine().lineId" />
+          <div v-else>Busque uma linha para começar.</div>
+        </v-layout>
+      </v-container>
     </v-content>
+    <v-notification-area />
   </v-app>
 </template>
 
 <script>
 import OpenOlhoVivoMap from './components/OpenOlhoVivoMap.vue';
+import Header from './layout/Header.vue';
+import LoadingOverlay from './layout/LoadingOverlay.vue';
+import NotificationArea from './layout/NotificationArea.vue';
 
 export default {
   name: 'App',
   components: {
     OpenOlhoVivoMap,
+    'v-header': Header,
+    'v-loading-overlay': LoadingOverlay,
+    'v-notification-area': NotificationArea,
   },
   data() {
-    return {
-      //
-    };
+    return {};
+  },
+  methods: {
+    selectedLine() {
+      return this.$store.getters.selectedLine;
+    },
   },
 };
 </script>

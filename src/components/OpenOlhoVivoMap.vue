@@ -1,29 +1,63 @@
 <template>
   <v-container>
-    <v-layout
-      text-xs-center
-      wrap
+    <h6 class="title line-title">
+      {{ currentLine().number }} - {{ currentLine().from }}/{{ currentLine().to }}
+    </h6>
+    <l-map :bounds="bounds" :zoom="zoom" :center="initialLocation">
+      <l-control class="custom-control">
+        <p @click="loadMapAdditionalData"><v-icon>refresh</v-icon></p>
+      </l-control>
+      <l-polyline :lat-lngs="[currentLine().latLngPaths]" />
+      <l-tile-layer
+      :key="tileProvider.name"
+      :name="tileProvider.name"
+      :visible="tileProvider.visible"
+      :url="tileProvider.url"
+      :attribution="tileProvider.attribution"
+      layer-type="base"/>
+      <l-marker
+        v-for="vehicle in vehicles()"
+        :lat-lng="[vehicle.py, vehicle.px]"
+        :key="vehicle.p">
+        <l-popup :content="popupContent(vehicle)"/>
+      </l-marker>
+    </l-map>
+    <v-speed-dial
+      v-model="fab"
+      :bottom="true"
+      :right="true"
+      direction="top"
+      transition="slide-y-reverse-transition"
     >
-      <l-map :bounds="bounds" :zoom="zoom" :center="initialLocation" style="height: 80%;">
-        <l-control class="custom-control">
-          <p @click="loadMap">Reload</p>
-        </l-control>
-        <l-polyline :lat-lngs="[latLngPaths]" />
-        <l-tile-layer
-        :key="tileProvider.name"
-        :name="tileProvider.name"
-        :visible="tileProvider.visible"
-        :url="tileProvider.url"
-        :attribution="tileProvider.attribution"
-        layer-type="base"/>
-        <l-marker
-          v-for="vehicle in vehicles"
-          :lat-lng="[vehicle.py, vehicle.px]"
-          :key="vehicle.p">
-          <l-popup :content="popupContent(vehicle)"/>
-        </l-marker>
-      </l-map>
-    </v-layout>
+      <template v-slot:activator>
+        <v-btn
+          v-model="fab"
+          color="indigo darken-2"
+          dark
+          fab
+        >
+          <v-icon>arrow_drop_up</v-icon>
+          <v-icon>close</v-icon>
+        </v-btn>
+      </template>
+      <v-btn
+        fab
+        dark
+        small
+        color="green"
+      >
+        <v-icon>star_border</v-icon>
+      </v-btn>
+      <v-btn
+        fab
+        dark
+        small
+        color="indigo"
+        @click="toggleDirection"
+      >
+        <v-icon>swap_horiz</v-icon>
+      </v-btn>
+    </v-speed-dial>
   </v-container>
 </template>
 
@@ -31,7 +65,8 @@
 import {
   LMap, LPolyline, LTileLayer, LPopup, LMarker, LControl,
 } from 'vue2-leaflet';
-import axios from 'axios';
+import configs from '../configs';
+import { constants } from '../store';
 
 const { L } = window;
 
@@ -46,57 +81,40 @@ export default {
     LControl,
   },
   created() {
-    this.loadMap();
-    setInterval(this.loadMap, 10 * 1000);
+    this.loadMapAdditionalData();
   },
-  props: {
-    lineId: String,
-    lineNumber: String,
-    lineDirection: String,
+  mounted() {
+    this.$store.subscribe((mutation) => {
+      if (mutation.type === constants.UNBLOCK_UI) {
+        this.fitPolyline();
+      }
+      if (mutation.type === constants.SELECT_LINE) {
+        this.loadMapAdditionalData();
+      }
+    });
   },
   data() {
     return {
-      initialLocation: [-23.5486, -46.6392],
-      latLngPaths: [],
-      vehicles: [],
+      fab: false,
+      initialLocation: configs.initialMapLocation,
       layersPosition: 'topright',
-      tileProvider: {
-        name: 'OpenStreetMap',
-        visible: true,
-        attribution: '&copy; <a target="_blank" href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-        url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-      },
+      tileProvider: configs.tileProvider,
       zoom: 13,
       bounds: L.latLngBounds(this.latLngPathsObject),
+      alerts: [],
     };
   },
   methods: {
     getLatLngPathsFromLine(lineNumber, direction) {
-      axios.get(`http://localhost:3000/linesSpTrans/${lineNumber}/route/${direction}`)
-        .then(({ data }) => {
-          if (data.status) {
-            const hasData = !!data.data.features.length;
-            if (hasData) {
-              this.latLngPaths = data.data.features[0].geometry.coordinates[0].map(
-                latLng => [latLng[1], latLng[0]],
-              );
-              this.fitPolyline();
-            }
-          }
-        })
-        .catch(e => console.log(e));
+      this.$store.dispatch(constants.GET_LINE_ROUTE, {
+        lineNumber,
+        direction,
+      });
     },
     setPositionMarkers(lineId) {
-      axios.get(`http://localhost:3000/lines/${lineId}/position`)
-        .then(({ data }) => {
-          if (data.status) {
-            const hasData = !!data.data.vs.length;
-            if (hasData) {
-              this.vehicles = data.data.vs;
-            }
-          }
-        })
-        .catch(e => console.log(e));
+      this.$store.dispatch(constants.GET_LINE_POSITIONS, {
+        lineId,
+      });
     },
     fitPolyline() {
       const bounds = L.latLngBounds(this.latLngPathsObject);
@@ -105,14 +123,23 @@ export default {
     popupContent(vehicle) {
       return `<strong>Prefixo do veículo:</strong> ${vehicle.p}<br/><strong>Acessível?</strong> ${vehicle.a ? 'Sim' : 'Não'}`;
     },
-    loadMap() {
-      this.getLatLngPathsFromLine(this.lineNumber, this.lineDirection);
-      this.setPositionMarkers(this.lineId);
+    loadMapAdditionalData() {
+      this.getLatLngPathsFromLine(this.currentLine().number, this.currentLine().direction);
+      this.setPositionMarkers(this.currentLine().lineId);
+    },
+    toggleDirection() {
+      this.$store.dispatch(constants.TOGGLE_LINE_DIRECTION);
+    },
+    currentLine() {
+      return this.$store.getters.selectedLine;
+    },
+    vehicles() {
+      return this.$store.getters.positions;
     },
   },
   computed: {
     latLngPathsObject() {
-      return this.latLngPaths.map(
+      return this.currentLine().latLngPaths.map(
         latLng => ({ lat: latLng[0], lng: latLng[1] }),
       );
     },
@@ -122,13 +149,20 @@ export default {
 
 <style lang="scss">
   .vue2leaflet-map {
-    min-height: 600px;
+    min-height: 420px;
+    margin-top: 20px;
+  }
+  .v-speed-dial {
+    z-index: 1001;
+    position: fixed;
+  }
+  .line-title {
+    margin-bottom: 20px;
   }
   .custom-control {
     background: #FFF;
     padding: 10px;
     cursor: pointer;
-    font-weight: bold;
 
     p { margin: 0; padding: 0; }
 
