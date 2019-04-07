@@ -15,17 +15,17 @@ Conta com uma API em Node.js e um front-end em Vue.js.
 - [ ] Integration tests
 
 ### To-do (front-end):
-- [ ] Estruturar o front-end
-- [ ] Estilizar
-- [ ] Aplicar o Google Maps (ou qualquer outra API de mapa que disponibilize overlay e posicionamento de marcadores)
-- [ ] Criar localStorage para guardar os favoritos
-- [ ] Realizar a comunicação deste com a API
+- [x] Estruturar o front-end
+- [x] Estilizar
+- [x] Aplicar o Leaflet.js (API gratuita de Maps)
+- [x] Criar localStorage para guardar os favoritos
+- [x] Realizar a comunicação deste com a API
 - [ ] Unit tests com Jest
 - [ ] E2E tests com CodeceptJS
 - [ ] Transformar em um app PWA
 
 ### To-do (geral):
-- [ ] Hospedar a aplicação - Now, Heroku ou Netlify
+- [x] Hospedar a aplicação - Now, Heroku ou Netlify
 
 ---
 
