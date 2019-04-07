@@ -2,10 +2,8 @@
   <div>
     <v-navigation-drawer
       v-model="drawer"
-      fixed
-      left
-      clipped
-      app
+      absolute
+      temporary
     >
       <v-list>
         <v-list-tile>
@@ -41,7 +39,7 @@
       </v-toolbar-title>
       <v-spacer />
       <v-toolbar-items dense>
-        <v-btn flat @click="searchDialog = true"><v-icon>search</v-icon></v-btn>
+        <v-btn flat @click="openSearchDialog"><v-icon>search</v-icon></v-btn>
       </v-toolbar-items>
     </v-toolbar>
     <v-dialog
@@ -77,12 +75,15 @@
         </v-list>
         <v-divider></v-divider>
         <v-list three-line subheader v-if="linesFound().length">
-          <v-subheader>Resultados encontrados</v-subheader>
+          <v-subheader>{{ linesFound().length }} resultado(s) encontrado(s)</v-subheader>
           <v-bus-item
           v-for="line in linesFound()"
           :key="line.cl"
           :line="line"
           :onClick="closeSearchDialog" />
+        </v-list>
+        <v-list three-line subheader v-else>
+          <v-subheader>Nenhum resultado encontrado.</v-subheader>
         </v-list>
       </v-card>
     </v-dialog>
@@ -121,6 +122,9 @@ export default {
     },
     favorites() {
       return this.$store.getters.favorites;
+    },
+    openSearchDialog() {
+      this.searchDialog = true;
     },
     closeSearchDialog() {
       this.searchDialog = false;

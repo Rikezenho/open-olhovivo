@@ -1,5 +1,5 @@
 <template>
-  <v-list-tile avatar>
+  <v-list-tile avatar class="bus-line">
     <v-list-tile-avatar @click="selectLine(line)">
       <v-icon>directions_bus</v-icon>
     </v-list-tile-avatar>
@@ -87,3 +87,9 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+  .bus-line {
+    cursor: pointer;
+  }
+</style>
