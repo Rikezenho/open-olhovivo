@@ -37,15 +37,15 @@
     "vuetify": "^1.5.5",
     "vuex": "^3.0.1",
     "vuex-persistedstate": "^2.5.4",
-    "@vue/cli-service": "^3.5.0"
-  },
-  "devDependencies": {
+    "@vue/cli-service": "^3.5.0",
     "@vue/cli-plugin-babel": "^3.5.0",
     "@vue/cli-plugin-eslint": "^3.5.0",
     "@vue/cli-plugin-pwa": "^3.5.0",
     "@vue/cli-plugin-unit-jest": "^3.5.0",
     "@vue/eslint-config-airbnb": "^4.0.0",
-    "@vue/test-utils": "1.0.0-beta.29",
+    "@vue/test-utils": "1.0.0-beta.29"
+  },
+  "devDependencies": {
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "^10.0.1",
     "babel-jest": "^23.6.0",
