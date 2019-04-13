@@ -17,10 +17,10 @@
         :url="tileProvider.url"
         :attribution="tileProvider.attribution"
         layer-type="base"/>
-        <l-marker
-          v-for="vehicle in vehicles()"
-          :lat-lng="[vehicle.py, vehicle.px]"
-          :key="vehicle.p">
+          <l-marker
+            v-for="vehicle in vehicles()"
+            :lat-lng="[vehicle.py, vehicle.px]"
+            :key="vehicle.p">
           <l-popup :content="popupContent(vehicle)"/>
         </l-marker>
       </l-map>
@@ -49,6 +49,7 @@
 import {
   LMap, LPolyline, LTileLayer, LPopup, LMarker, LControl,
 } from 'vue2-leaflet';
+import moment from 'moment';
 import configs from '../configs';
 import { constants } from '../store';
 
@@ -105,7 +106,13 @@ export default {
       this.bounds = bounds;
     },
     popupContent(vehicle) {
-      return `<strong>Prefixo do veículo:</strong> ${vehicle.p}<br/><strong>Acessível?</strong> ${vehicle.a ? 'Sim' : 'Não'}`;
+      const lastUpdate = moment(vehicle.ta);
+      const timeElapsed = moment().diff(lastUpdate, 'seconds');
+      return `
+      <strong>Última atualização:</strong> ${lastUpdate.format('HH:mm:ss')} (${timeElapsed}s atrás)<br/>
+      <strong>Prefixo do veículo:</strong> ${vehicle.p}<br/>
+      <strong>Acessível?</strong> ${vehicle.a ? 'Sim' : 'Não'}
+      `;
     },
     loadMapAdditionalData() {
       this.getLatLngPathsFromLine(this.currentLine().number, this.currentLine().direction);
