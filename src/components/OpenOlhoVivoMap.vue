@@ -23,8 +23,13 @@
             v-for="vehicle in vehicles()"
             :lat-lng="[vehicle.py, vehicle.px]"
             :key="vehicle.p">
-          <l-popup :content="popupContent(vehicle)"/>
-        </l-marker>
+            <l-popup :content="popupContent(vehicle)"/>
+          </l-marker>
+          <l-marker
+            v-if="userCoords.length"
+            :lat-lng="userCoords"
+            :icon="userIcon"
+            key="user_position" />
       </l-map>
       <v-speed-dial
         v-model="fab"
@@ -71,6 +76,7 @@ export default {
     this.loadMapAdditionalData();
   },
   mounted() {
+    this.getUserPosition();
     this.$store.subscribe((mutation) => {
       if (mutation.type === constants.UNBLOCK_UI) {
         this.fitPolyline();
@@ -89,6 +95,14 @@ export default {
       zoom: 13,
       bounds: L.latLngBounds(this.latLngPathsObject),
       alerts: [],
+      userIcon: L.icon({
+        iconUrl: require('../assets/marker-me.png'),
+        shadowUrl: require('../assets/marker-shadow.png'),
+        iconSize: [25, 37],
+        shadowSize: [41, 41],
+        shadowAnchor: [14, 25],
+      }),
+      userCoords: [],
     };
   },
   methods: {
@@ -132,6 +146,14 @@ export default {
     latLngPaths() {
       return this.$store.getters.latLngPaths;
     },
+    getUserPosition() {
+      if ('geolocation' in navigator) {
+        navigator.geolocation.watchPosition((position) => {
+          this.userCoords[0] = position.coords.latitude;
+          this.userCoords[1] = position.coords.longitude;
+        }, err => console.log(err));
+      }
+    },
   },
   computed: {
     latLngPathsObject() {
@@ -158,7 +180,7 @@ export default {
   }
   .line-title-container {
     position: fixed;
-    bottom: 10px;
+    bottom: 20px;
     left: 10px;
     right: 90px;
     z-index: 1;
