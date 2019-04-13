@@ -1,5 +1,6 @@
 {
   "name": "Open OlhoVivo",
+  "version": "0.2.0",
   "short_name": "OpenOlhoVivo",
   "theme_color": "#7740c6",
   "background_color": "#dadada",
