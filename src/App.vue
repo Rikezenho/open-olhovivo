@@ -8,8 +8,7 @@
           text-xs-center
           wrap
         >
-          <open-olho-vivo-map v-if="selectedLine().lineId" />
-          <div v-else>Busque uma linha para começar.</div>
+          <open-olho-vivo-map />
         </v-layout>
       </v-container>
     </v-content>
@@ -30,14 +29,6 @@ export default {
     'v-header': Header,
     'v-loading-overlay': LoadingOverlay,
     'v-notification-area': NotificationArea,
-  },
-  data() {
-    return {};
-  },
-  methods: {
-    selectedLine() {
-      return this.$store.getters.selectedLine;
-    },
   },
 };
 </script>

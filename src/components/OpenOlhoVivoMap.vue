@@ -1,44 +1,47 @@
 <template>
   <v-container>
-    <h6 class="title line-title">
-      {{ currentLine().number }} - {{ currentLine().from }}/{{ currentLine().to }}
-    </h6>
-    <l-map :bounds="bounds" :zoom="zoom" :center="initialLocation">
-      <l-control class="custom-control">
-        <p @click="loadMapAdditionalData"><v-icon>refresh</v-icon></p>
-      </l-control>
-      <l-polyline :lat-lngs="[latLngPaths()]" />
-      <l-tile-layer
-      :key="tileProvider.name"
-      :name="tileProvider.name"
-      :visible="tileProvider.visible"
-      :url="tileProvider.url"
-      :attribution="tileProvider.attribution"
-      layer-type="base"/>
-      <l-marker
-        v-for="vehicle in vehicles()"
-        :lat-lng="[vehicle.py, vehicle.px]"
-        :key="vehicle.p">
-        <l-popup :content="popupContent(vehicle)"/>
-      </l-marker>
-    </l-map>
-    <v-speed-dial
-      v-model="fab"
-      :bottom="true"
-      :right="true"
-    >
-      <template v-slot:activator>
-        <v-btn
-          fab
-          dark
-          small
-          color="indigo"
-          @click="toggleDirection"
-        >
-          <v-icon>swap_horiz</v-icon>
-        </v-btn>
-      </template>
-    </v-speed-dial>
+    <div v-if="!currentLine().lineId">Busque uma linha para começar.</div>
+    <div v-else>
+      <h6 class="title line-title">
+        {{ currentLine().number }} - {{ currentLine().from }}/{{ currentLine().to }}
+      </h6>
+      <l-map :bounds="bounds" :zoom="zoom" :center="initialLocation">
+        <l-control class="custom-control">
+          <p @click="loadMapAdditionalData"><v-icon>refresh</v-icon></p>
+        </l-control>
+        <l-polyline :lat-lngs="[latLngPaths()]" />
+        <l-tile-layer
+        :key="tileProvider.name"
+        :name="tileProvider.name"
+        :visible="tileProvider.visible"
+        :url="tileProvider.url"
+        :attribution="tileProvider.attribution"
+        layer-type="base"/>
+        <l-marker
+          v-for="vehicle in vehicles()"
+          :lat-lng="[vehicle.py, vehicle.px]"
+          :key="vehicle.p">
+          <l-popup :content="popupContent(vehicle)"/>
+        </l-marker>
+      </l-map>
+      <v-speed-dial
+        v-model="fab"
+        :bottom="true"
+        :right="true"
+      >
+        <template v-slot:activator>
+          <v-btn
+            fab
+            dark
+            small
+            color="indigo"
+            @click="toggleDirection"
+          >
+            <v-icon>swap_horiz</v-icon>
+          </v-btn>
+        </template>
+      </v-speed-dial>
+    </div>
   </v-container>
 </template>
 
