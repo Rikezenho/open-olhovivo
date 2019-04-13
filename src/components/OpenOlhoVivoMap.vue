@@ -2,9 +2,11 @@
   <v-container>
     <div v-if="!currentLine().lineId">Busque uma linha para começar.</div>
     <div v-else>
-      <h6 class="title line-title">
-        {{ currentLine().number }} - {{ currentLine().from }}/{{ currentLine().to }}
-      </h6>
+      <div class="line-title-container">
+        <h6 class="title line-title">
+          {{ currentLine().number }} - {{ currentLine().from }}/{{ currentLine().to }}
+        </h6>
+      </div>
       <l-map :bounds="bounds" :zoom="zoom" :center="initialLocation">
         <l-control class="custom-control">
           <p @click="loadMapAdditionalData"><v-icon>refresh</v-icon></p>
@@ -143,15 +145,30 @@ export default {
 
 <style lang="scss">
   .vue2leaflet-map {
-    min-height: 420px;
-    margin-top: 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 0;
   }
   .v-speed-dial {
     z-index: 1001;
     position: fixed;
   }
-  .line-title {
-    margin-bottom: 20px;
+  .line-title-container {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    right: 90px;
+    z-index: 1;
+    text-align: left;
+
+    .line-title {
+      display: inline-block;
+      background: #FFF;
+      padding: 15px;
+    }
   }
   .custom-control {
     background: #FFF;

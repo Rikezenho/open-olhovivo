@@ -32,3 +32,9 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+  .application {
+    position: relative;
+  }
+</style>
