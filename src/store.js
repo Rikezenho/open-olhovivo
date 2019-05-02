@@ -122,8 +122,8 @@ export default new Vuex.Store({
     [constants.TOGGLE_LINE_DIRECTION]({ dispatch, commit, state }) {
       commit(constants.TOGGLE_LINE_DIRECTION);
 
-      const { selectedLine: { lineNumber, direction, lineId } } = state;
-      dispatch(constants.GET_LINE_ROUTE, { lineNumber, direction });
+      const { selectedLine: { number, direction, lineId } } = state;
+      dispatch(constants.GET_LINE_ROUTE, { lineNumber: number, direction });
       dispatch(constants.GET_LINE_POSITIONS, { lineId });
     },
     [constants.GET_LINE_ROUTE]({ dispatch, commit }, { lineNumber, direction }) {
