@@ -2,6 +2,7 @@
   <v-app>
     <v-loading-overlay />
     <v-header />
+    <v-update-dialog />
     <v-content>
       <v-container fluid>
         <v-layout
@@ -17,10 +18,12 @@
 </template>
 
 <script>
+import axios from 'axios';
 import OpenOlhoVivoMap from './components/OpenOlhoVivoMap.vue';
 import Header from './layout/Header.vue';
 import LoadingOverlay from './layout/LoadingOverlay.vue';
 import NotificationArea from './layout/NotificationArea.vue';
+import UpdateDialog from './layout/UpdateDialog.vue';
 
 import { constants } from './store';
 
@@ -30,6 +33,14 @@ export default {
     document.addEventListener(
       'swUpdated', this.showUpdateNotification, { once: true },
     );
+
+    const currentVersion = localStorage.getItem('currentVersion') || '0.0.0';
+    axios.get('/version.json')
+      .then(({ data }) => {
+        if (data.version !== currentVersion) {
+          document.dispatchEvent(new CustomEvent('updateAvailable', { detail: { version: data.version } }));
+        }
+      });
   },
   methods: {
     showUpdateNotification() {
@@ -41,6 +52,7 @@ export default {
     'v-header': Header,
     'v-loading-overlay': LoadingOverlay,
     'v-notification-area': NotificationArea,
+    'v-update-dialog': UpdateDialog,
   },
 };
 </script>

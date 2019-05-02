@@ -1,6 +1,6 @@
 {
   "name": "open-olhovivo",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "private": true,
   "author": {
     "name": "Henrique Kuwai",
@@ -13,7 +13,7 @@
   },
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "build": "node bumpVersion.js && vue-cli-service build",
     "lint": "vue-cli-service lint",
     "api": "cd server && yarn start",
     "buildAndStartServer:all": "concurrently --kill-others --prefix-colors bgCyan,bgMagenta \"npm:build\" \"npm:api\"",
