@@ -32,29 +32,40 @@
             key="user_position" />
       </l-map>
       <v-speed-dial
+        v-model="fab"
         :bottom="true"
         :right="true"
+        direction="top"
       >
         <template v-slot:activator>
           <v-btn
-            fab
+            v-model="fab"
+            color="indigo darken-2"
             dark
-            small
-            color="indigo"
-            @click="$utils.toggleFavorite(currentLine())"
-          >
-            <v-icon>{{ $utils.getFavoritedIcon(currentLine().lineId) }}</v-icon>
-          </v-btn>
-          <v-btn
             fab
-            dark
-            small
-            color="indigo"
-            @click="toggleDirection"
           >
-            <v-icon>swap_horiz</v-icon>
+            <v-icon>more_horiz</v-icon>
+            <v-icon>close</v-icon>
           </v-btn>
         </template>
+        <v-btn
+          fab
+          dark
+          small
+          color="orange"
+          @click="$utils.toggleFavorite(currentLine())"
+        >
+          <v-icon>{{ $utils.getFavoritedIcon(currentLine().lineId) }}</v-icon>
+        </v-btn>
+        <v-btn
+          fab
+          dark
+          small
+          color="indigo"
+          @click="toggleDirection"
+        >
+          <v-icon>swap_horiz</v-icon>
+        </v-btn>
       </v-speed-dial>
     </div>
   </v-container>
@@ -96,6 +107,7 @@ export default {
   },
   data() {
     return {
+      fab: false,
       initialLocation: configs.initialMapLocation,
       layersPosition: 'topright',
       tileProvider: configs.tileProvider,
