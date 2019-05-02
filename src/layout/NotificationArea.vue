@@ -4,12 +4,7 @@
       :multi-line="true"
       :timeout="6000"
     >
-    <span v-if="error">
-      Erro: {{ error }}
-    </span>
-    <span v-if="notification">
-      {{ notification }}
-    </span>
+    {{ msg }}
     <v-btn
       dark
       flat
@@ -29,19 +24,18 @@ export default {
     this.$store.subscribe((mutation, state) => {
       if (mutation.type === constants.REQUEST_ERROR) {
         this.snackbar = true;
-        this.error = state.error;
+        this.msg = `Erro: ${state.error}`;
       }
       if (mutation.type === constants.NOTIFICATION) {
         this.snackbar = true;
-        this.notification = state.notification;
+        this.msg = state.notification;
       }
     });
   },
   data() {
     return {
       snackbar: false,
-      error: '',
-      notification: '',
+      msg: '',
     };
   },
 };
