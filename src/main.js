@@ -6,6 +6,7 @@ import './plugins/vuetify';
 import App from './App.vue';
 import store from './store';
 import './registerServiceWorker';
+import functions from './utils/functions';
 
 delete Icon.Default.prototype._getIconUrl;
 
@@ -16,6 +17,8 @@ Icon.Default.mergeOptions({
 });
 
 Vue.config.productionTip = false;
+
+Vue.prototype.$utils = functions;
 
 new Vue({
   store,

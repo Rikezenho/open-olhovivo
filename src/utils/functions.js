@@ -1,3 +1,5 @@
+import store, { constants } from '../store';
+
 const normalizeLineData = (line, lineBack = {}) => ({
   lineId: line.cl,
   from: line.sl === 1 ? line.ts : line.tp,
@@ -8,6 +10,25 @@ const normalizeLineData = (line, lineBack = {}) => ({
   toggleLine: lineBack,
 });
 
+const isFavorited = lineId => !!store.getters.favorites.filter(
+  item => item.lineId === lineId,
+).length;
+
+const saveFavoriteLine = line => store.dispatch(constants.SAVE_FAVORITE_LINE, line);
+
+const removeFavoriteLine = lineId => store.dispatch(constants.REMOVE_FAVORITE_LINE, lineId);
+
+const toggleFavorite = line => (isFavorited(line.lineId)
+  ? removeFavoriteLine(line.lineId)
+  : saveFavoriteLine(line));
+
+const getFavoritedIcon = lineId => (!isFavorited(lineId) ? 'star_border' : 'star');
+
 export default {
   normalizeLineData,
+  isFavorited,
+  toggleFavorite,
+  saveFavoriteLine,
+  removeFavoriteLine,
+  getFavoritedIcon,
 };
