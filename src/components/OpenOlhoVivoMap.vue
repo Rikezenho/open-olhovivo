@@ -36,6 +36,7 @@
         :bottom="true"
         :right="true"
         direction="top"
+        transition="slide-x-transition"
       >
         <template v-slot:activator>
           <v-btn
