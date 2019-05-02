@@ -4,7 +4,12 @@
       :multi-line="true"
       :timeout="6000"
     >
-    Erro: {{ error }}
+    <span v-if="error">
+      Erro: {{ error }}
+    </span>
+    <span v-if="notification">
+      {{ notification }}
+    </span>
     <v-btn
       dark
       flat
@@ -26,12 +31,17 @@ export default {
         this.snackbar = true;
         this.error = state.error;
       }
+      if (mutation.type === constants.NOTIFICATION) {
+        this.snackbar = true;
+        this.notification = state.notification;
+      }
     });
   },
   data() {
     return {
       snackbar: false,
       error: '',
+      notification: '',
     };
   },
 };

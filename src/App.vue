@@ -22,8 +22,20 @@ import Header from './layout/Header.vue';
 import LoadingOverlay from './layout/LoadingOverlay.vue';
 import NotificationArea from './layout/NotificationArea.vue';
 
+import { constants } from './store';
+
 export default {
   name: 'App',
+  created() {
+    document.addEventListener(
+      'swUpdated', this.showUpdateNotification, { once: true },
+    );
+  },
+  methods: {
+    showUpdateNotification() {
+      this.$store.dispatch(constants.NOTIFICATION, 'Nova versão instalada!');
+    },
+  },
   components: {
     OpenOlhoVivoMap,
     'v-header': Header,

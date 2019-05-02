@@ -19,6 +19,9 @@ register(`${process.env.BASE_URL}service-worker.js`, {
     console.log('New content is downloading.');
   },
   updated() {
+    document.dispatchEvent(
+      new CustomEvent('swUpdated'),
+    );
     console.log('New content is available; please refresh.');
   },
   offline() {

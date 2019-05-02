@@ -9,6 +9,7 @@ export const constants = {
   BLOCK_UI: 'BLOCK_UI',
   UNBLOCK_UI: 'UNBLOCK_UI',
   TOGGLE_SEARCH: 'TOGGLE_SEARCH',
+  NOTIFICATION: 'NOTIFICATION',
   REQUEST_ERROR: 'REQUEST_ERROR',
   SEARCH_LINES: 'SEARCH_LINES',
   SELECT_LINE: 'SELECT_LINE',
@@ -53,6 +54,9 @@ export default new Vuex.Store({
     },
     [constants.TOGGLE_SEARCH](state) {
       Vue.set(state, 'searchDialog', !state.searchDialog);
+    },
+    [constants.NOTIFICATION](state, payload) {
+      Vue.set(state, 'notification', payload);
     },
     [constants.REQUEST_ERROR](state, payload) {
       Vue.set(state, 'error', payload);
@@ -100,6 +104,9 @@ export default new Vuex.Store({
     },
     [constants.TOGGLE_SEARCH]({ commit }) {
       commit(constants.TOGGLE_SEARCH);
+    },
+    [constants.NOTIFICATION]({ commit }, payload) {
+      commit(constants.NOTIFICATION, payload);
     },
     [constants.REQUEST_ERROR]({ commit }, payload) {
       commit(constants.REQUEST_ERROR, payload);
