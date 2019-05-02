@@ -5,6 +5,7 @@ module.exports = {
     assetsVersion: pkg.version,
     workboxOptions: {
       cacheId: `open-olhovivo-${pkg.version}`,
+      skipWaiting: true,
     },
   },
 };
