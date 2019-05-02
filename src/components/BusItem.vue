@@ -10,8 +10,8 @@
         {{ line.circular ? '(CIRCULAR)' : '' }}
       </v-list-tile-title>
       <v-list-tile-sub-title>
-        ORIGEM: {{ line.direction === 'going' ? line.from : line.to }}<br/>
-        DESTINO: {{ line.direction === 'going' ? line.to : line.from }}
+        ORIGEM: {{ line.from }}<br/>
+        DESTINO: {{ line.to }}
       </v-list-tile-sub-title>
     </v-list-tile-content>
     <v-list-tile-action @click="$utils.toggleFavorite(line)">
