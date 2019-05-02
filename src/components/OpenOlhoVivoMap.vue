@@ -32,11 +32,19 @@
             key="user_position" />
       </l-map>
       <v-speed-dial
-        v-model="fab"
         :bottom="true"
         :right="true"
       >
         <template v-slot:activator>
+          <v-btn
+            fab
+            dark
+            small
+            color="indigo"
+            @click="$utils.toggleFavorite(currentLine())"
+          >
+            <v-icon>{{ $utils.getFavoritedIcon(currentLine().lineId) }}</v-icon>
+          </v-btn>
           <v-btn
             fab
             dark
@@ -87,7 +95,7 @@ export default {
     });
   },
   data() {
-      fab: false,
+    return {
       initialLocation: configs.initialMapLocation,
       layersPosition: 'topright',
       tileProvider: configs.tileProvider,

@@ -14,11 +14,11 @@
         DESTINO: {{ line.direction === 'going' ? line.to : line.from }}
       </v-list-tile-sub-title>
     </v-list-tile-content>
-    <v-list-tile-action @click="handleFavorite(line)">
+    <v-list-tile-action @click="$utils.toggleFavorite(line)">
       <v-btn icon ripple>
         <v-icon
         :color="favoritedColor(line.lineId) + 'lighten-1'">
-          {{ favoritedIcon(line.lineId) }}
+          {{ $utils.getFavoritedIcon(line.lineId) }}
         </v-icon>
       </v-btn>
     </v-list-tile-action>
@@ -27,9 +27,6 @@
 
 <script>
 import { constants } from '../store';
-import functions from '../utils/functions';
-
-const { normalizeLineData } = functions;
 
 export default {
   name: 'BusItem',
@@ -40,49 +37,13 @@ export default {
   methods: {
     selectLine(line) {
       this.$store.dispatch(constants.TOGGLE_SEARCH);
-      const toggleLine = this.getLineBack(line);
-      this.$store.dispatch(constants.SELECT_LINE, {
-        ...line,
-        toggleLine,
-      });
+      this.$store.dispatch(constants.SELECT_LINE, line);
       if (typeof this.onClick === 'function') {
         this.onClick();
       }
     },
-    getLineBack(line) {
-      const lines = this.$store.getters.linesFound;
-      const lineBack = lines.filter(item => item.number === line.number
-        && item.direction !== line.direction)[0];
-      return lineBack;
-    },
     favoritedColor(lineId) {
-      return !this.isFavorited(lineId) ? 'grey' : 'amber';
-    },
-    favoritedIcon(lineId) {
-      return !this.isFavorited(lineId) ? 'star_border' : 'star';
-    },
-    favoritedLines() {
-      return this.$store.getters.favorites;
-    },
-    isFavorited(lineId) {
-      return !!this.favoritedLines().filter(item => item.lineId === lineId).length;
-    },
-    handleFavorite(line) {
-      if (this.isFavorited(line.lineId)) {
-        this.removeFavoriteLine(line.lineId);
-      } else {
-        this.saveFavoriteLine(line);
-      }
-    },
-    saveFavoriteLine(line) {
-      const toggleLine = normalizeLineData(this.getLineBack(line));
-      this.$store.dispatch(constants.SAVE_FAVORITE_LINE, {
-        ...line,
-        toggleLine,
-      });
-    },
-    removeFavoriteLine(lineId) {
-      this.$store.dispatch(constants.REMOVE_FAVORITE_LINE, lineId);
+      return !this.$utils.isFavorited(lineId) ? 'grey' : 'amber';
     },
   },
 };
