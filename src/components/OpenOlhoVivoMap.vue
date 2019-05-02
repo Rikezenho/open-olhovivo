@@ -87,7 +87,6 @@ export default {
     });
   },
   data() {
-    return {
       fab: false,
       initialLocation: configs.initialMapLocation,
       layersPosition: 'topright',
