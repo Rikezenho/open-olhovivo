@@ -20,7 +20,20 @@ export const constants = {
 };
 
 export default new Vuex.Store({
-  plugins: [createPersistedState()],
+  plugins: [
+    createPersistedState({
+      reducer: (persistedState) => {
+        const stateToSave = {};
+        const propsToSave = ['favorites', 'selectedLine'];
+
+        propsToSave.forEach((item) => {
+          stateToSave[item] = persistedState[item];
+        });
+
+        return stateToSave;
+      },
+    }),
+  ],
   state: {
     latLngPaths: [],
     positions: [],
