@@ -42,7 +42,12 @@ const searchLines = term => new Promise((resolve, reject) => {
       if (data.status) {
         const hasData = !!data.data.length;
         if (hasData) {
-          resolve(data.data.map(item => normalizeLineData(item)));
+          resolve(data.data.map((item) => {
+            const lineBack = data.data.filter(search => search.tp === item.tp
+              && search.ts === item.ts
+              && search.sl !== item.sl)[0];
+            return normalizeLineData(item, normalizeLineData(lineBack));
+          }));
         } else {
           reject(new Error('No lines found.'));
         }
