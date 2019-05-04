@@ -35,7 +35,7 @@ export default {
     );
 
     const currentVersion = localStorage.getItem('currentVersion') || '0.0.0';
-    axios.get('/version.json')
+    axios.get('/appVersion')
       .then(({ data }) => {
         if (data.version !== currentVersion) {
           document.dispatchEvent(new CustomEvent('updateAvailable', { detail: { version: data.version } }));
