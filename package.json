@@ -14,7 +14,7 @@
   "husky": {
     "hooks": {
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    } 
+    }
   },
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -24,7 +24,21 @@
     "buildAndStartServer:all": "concurrently --kill-others --prefix-colors bgCyan,bgMagenta \"npm:build\" \"npm:api\"",
     "start:all": "concurrently --kill-others --prefix-colors bgCyan,bgMagenta \"npm:serve\" \"npm:api\"",
     "test:unit": "vue-cli-service test:unit",
-    "commit": "git-cz"
+    "commit": "git-cz",
+    "semantic-release": "semantic-release"
+  },
+  "release": {
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      [
+        "@semantic-release/npm",
+        {
+          "npmPublish": false
+        }
+      ],
+      "@semantic-release/github"
+    ]
   },
   "workspaces": [
     "server"
@@ -65,6 +79,7 @@
     "husky": "^2.2.0",
     "sass": "^1.17.2",
     "sass-loader": "^7.1.0",
+    "semantic-release": "^15.13.3",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.1",
     "vue-cli-plugin-vuetify": "^0.5.0",
