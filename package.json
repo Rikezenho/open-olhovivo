@@ -18,7 +18,7 @@
   },
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "node bumpVersion.js && vue-cli-service build",
+    "build": "vue-cli-service build && semantic-release && node bumpVersion.js",
     "lint": "vue-cli-service lint",
     "api": "cd server && yarn start",
     "buildAndStartServer:all": "concurrently --kill-others --prefix-colors bgCyan,bgMagenta \"npm:build\" \"npm:api\"",
@@ -38,7 +38,20 @@
         }
       ],
       "@semantic-release/github"
-    ]
+    ],
+    "prepare": [
+      "@semantic-release/changelog",
+      "@semantic-release/npm",
+      {
+       "path": "@semantic-release/git",
+        "assets": [
+         "package.json",
+         "package-lock.json",
+         "CHANGELOG.md"
+       ],
+       "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+     }
+   ]
   },
   "workspaces": [
     "server"
@@ -61,6 +74,8 @@
   "devDependencies": {
     "@commitlint/cli": "^7.5.2",
     "@commitlint/config-conventional": "^7.5.0",
+    "@semantic-release/changelog": "^3.0.2",
+    "@semantic-release/git": "^7.0.8",
     "@vue/cli-plugin-babel": "^3.5.0",
     "@vue/cli-plugin-eslint": "^3.5.0",
     "@vue/cli-plugin-pwa": "^3.5.0",
