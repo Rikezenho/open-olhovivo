@@ -78,7 +78,7 @@ import {
 } from 'vue2-leaflet';
 import moment from 'moment';
 import configs from '../configs';
-import { constants } from '../store';
+import constants from '../store/constants';
 
 const { L } = window;
 

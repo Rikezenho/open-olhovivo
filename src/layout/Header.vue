@@ -92,7 +92,7 @@
 
 <script>
 import { repository } from '../../package.json';
-import { constants } from '../store';
+import constants from '../store/constants';
 import BusItem from '../components/BusItem.vue';
 
 export default {

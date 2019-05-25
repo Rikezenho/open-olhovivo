@@ -26,7 +26,7 @@ import LoadingOverlay from './layout/LoadingOverlay.vue';
 import NotificationArea from './layout/NotificationArea.vue';
 import versionJson from './version.json';
 
-import { constants } from './store';
+import constants from './store/constants';
 
 export default {
   name: 'App',
