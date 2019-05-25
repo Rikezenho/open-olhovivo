@@ -11,14 +11,20 @@
     "type": "git",
     "url": "https://github.com/Rikezenho/open-olhovivo.git"
   },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "node bumpVersion.js && vue-cli-service build",
+    "build": "vue-cli-service build && semantic-release && node bumpVersion.js",
     "lint": "vue-cli-service lint",
     "api": "cd server && yarn start",
     "buildAndStartServer:all": "concurrently --kill-others --prefix-colors bgCyan,bgMagenta \"npm:build\" \"npm:api\"",
     "start:all": "concurrently --kill-others --prefix-colors bgCyan,bgMagenta \"npm:serve\" \"npm:api\"",
-    "test:unit": "vue-cli-service test:unit"
+    "test:unit": "vue-cli-service test:unit",
+    "commit": "git-cz"
   },
   "workspaces": [
     "server"
@@ -39,6 +45,8 @@
     "vuex-persistedstate": "^2.5.4"
   },
   "devDependencies": {
+    "@commitlint/cli": "^7.5.2",
+    "@commitlint/config-conventional": "^7.5.0",
     "@vue/cli-plugin-babel": "^3.5.0",
     "@vue/cli-plugin-eslint": "^3.5.0",
     "@vue/cli-plugin-pwa": "^3.5.0",
@@ -49,9 +57,12 @@
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "^10.0.1",
     "babel-jest": "^23.6.0",
+    "commitizen": "^3.1.1",
+    "cz-conventional-changelog": "^2.1.0",
     "eslint": "^5.8.0",
     "eslint-plugin-vue": "^5.0.0",
     "fibers": "^3.1.1",
+    "husky": "^2.2.0",
     "sass": "^1.17.2",
     "sass-loader": "^7.1.0",
     "stylus": "^0.54.5",
@@ -60,5 +71,10 @@
     "vue-template-compiler": "^2.5.21",
     "vuetify-loader": "^1.0.5"
   },
-  "license": "GNU GENERAL PUBLIC LICENSE"
+  "license": "GNU GENERAL PUBLIC LICENSE",
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
 }
