@@ -20,10 +20,11 @@
 <script>
 import axios from 'axios';
 import OpenOlhoVivoMap from './components/OpenOlhoVivoMap.vue';
+import UpdateDialog from './components/UpdateDialog.vue';
 import Header from './layout/Header.vue';
 import LoadingOverlay from './layout/LoadingOverlay.vue';
 import NotificationArea from './layout/NotificationArea.vue';
-import UpdateDialog from './layout/UpdateDialog.vue';
+import versionJson from './version.json';
 
 import { constants } from './store';
 
@@ -34,8 +35,9 @@ export default {
       'swUpdated', this.showUpdateNotification, { once: true },
     );
 
-    const currentVersion = localStorage.getItem('currentVersion') || '0.0.0';
-    axios.get('/appVersion')
+    window.appVersion = versionJson.version;
+    const currentVersion = versionJson.version || '0.0.0';
+    axios.get('/version.json')
       .then(({ data }) => {
         if (data.version !== currentVersion) {
           document.dispatchEvent(new CustomEvent('updateAvailable', { detail: { version: data.version } }));
