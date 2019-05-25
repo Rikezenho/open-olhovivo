@@ -17,12 +17,12 @@
     }
   },
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build && semantic-release && node bumpVersion.js",
+    "serve": "node bumpVersion.js && cross-env NODE_ENV=development vue-cli-service serve",
+    "build": "node bumpVersion.js && cross-env NODE_ENV=production vue-cli-service build",
     "lint": "vue-cli-service lint",
     "api": "cd server && yarn start",
     "buildAndStartServer:all": "concurrently --kill-others --prefix-colors bgCyan,bgMagenta \"npm:build\" \"npm:api\"",
-    "start:all": "concurrently --kill-others --prefix-colors bgCyan,bgMagenta \"npm:serve\" \"npm:api\"",
+    "start": "concurrently --kill-others --prefix-colors bgCyan,bgMagenta \"npm:serve\" \"npm:api\"",
     "test:unit": "vue-cli-service test:unit",
     "commit": "git-cz"
   },
@@ -59,6 +59,7 @@
     "babel-jest": "^23.6.0",
     "commitizen": "^3.1.1",
     "cz-conventional-changelog": "^2.1.0",
+    "cross-env": "^5.2.0",
     "eslint": "^5.8.0",
     "eslint-plugin-vue": "^5.0.0",
     "fibers": "^3.1.1",
@@ -69,7 +70,8 @@
     "stylus-loader": "^3.0.1",
     "vue-cli-plugin-vuetify": "^0.5.0",
     "vue-template-compiler": "^2.5.21",
-    "vuetify-loader": "^1.0.5"
+    "vuetify-loader": "^1.0.5",
+    "webpack": "^4.32.2"
   },
   "license": "GNU GENERAL PUBLIC LICENSE",
   "config": {
