@@ -46,7 +46,6 @@ export default {
   },
   methods: {
     acceptUpdate() {
-      localStorage.setItem('currentVersion', this.desiredVersion);
       window.location.reload();
     },
   },
