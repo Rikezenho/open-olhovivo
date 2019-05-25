@@ -1,12 +1,11 @@
 import axios from 'axios';
-import configs from '../configs';
 import functions from './functions';
 
 const { normalizeLineData } = functions;
 
 const getLineRoute = (lineNumber, direction) => new Promise((resolve, reject) => {
   axios.get(
-    `${configs.API_BASE_URL}/linesSpTrans/${lineNumber}/route/${direction}`,
+    `${process.env.API_URL}/linesSpTrans/${lineNumber}/route/${direction}`,
   )
     .then(({ data }) => {
       if (data.status) {
@@ -22,7 +21,7 @@ const getLineRoute = (lineNumber, direction) => new Promise((resolve, reject) =>
 });
 
 const getLinePositions = lineId => new Promise((resolve, reject) => {
-  axios.get(`${configs.API_BASE_URL}/lines/${lineId}/position`)
+  axios.get(`${process.env.API_URL}/lines/${lineId}/position`)
     .then(({ data }) => {
       if (data.status) {
         const hasData = !!data.data.vs.length;
@@ -37,7 +36,7 @@ const getLinePositions = lineId => new Promise((resolve, reject) => {
 });
 
 const searchLines = term => new Promise((resolve, reject) => {
-  axios.get(`${configs.API_BASE_URL}/searchLines/${term}`)
+  axios.get(`${process.env.API_URL}/searchLines/${term}`)
     .then(({ data }) => {
       if (data.status) {
         const hasData = !!data.data.length;

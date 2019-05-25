@@ -1,7 +1,4 @@
-const API_BASE_URL = 'https://open-olhovivo-api.rikezenho.now.sh';
-
 export default {
-  API_BASE_URL,
   initialMapLocation: [-23.5486, -46.6392],
   tileProvider: {
     name: 'OpenStreetMap',
