@@ -1,4 +1,5 @@
-import store, { constants } from '../store';
+import store from '../store';
+import constants from '../store/constants';
 
 const normalizeLineData = (line, lineBack = {}) => ({
   lineId: line.cl,
