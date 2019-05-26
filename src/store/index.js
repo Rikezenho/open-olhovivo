@@ -1,9 +1,9 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import createPersistedState from 'vuex-persistedstate';
-import mutations from './store/mutations';
-import getters from './store/getters';
-import actions from './store/actions';
+import mutations from './mutations';
+import getters from './getters';
+import actions from './actions';
 
 Vue.use(Vuex);
 
@@ -19,6 +19,13 @@ export const initialState = {
 };
 
 export const storeConfig = {
+  state: initialState,
+  mutations,
+  getters,
+  actions,
+};
+
+export default new Vuex.Store({
   plugins: [
     createPersistedState({
       reducer: (persistedState) => {
@@ -33,10 +40,5 @@ export const storeConfig = {
       },
     }),
   ],
-  state: initialState,
-  mutations,
-  getters,
-  actions,
-};
-
-export default new Vuex.Store(storeConfig);
+  ...storeConfig,
+});
