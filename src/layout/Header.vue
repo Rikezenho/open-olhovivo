@@ -91,7 +91,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 import { repository } from '../../package.json';
 import constants from '../store/constants';
 import BusItem from '../components/BusItem.vue';
@@ -114,8 +114,9 @@ export default {
     'favorites',
   ]),
   methods: {
+    ...mapActions([constants.SEARCH_LINES]),
     searchLines() {
-      this.$store.dispatch(constants.SEARCH_LINES, this.search);
+      this[constants.SEARCH_LINES](this.search);
     },
     handleInput() {
       if (this.search.length >= 4) {

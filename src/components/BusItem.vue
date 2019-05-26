@@ -26,6 +26,7 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex';
 import constants from '../store/constants';
 
 export default {
@@ -35,9 +36,13 @@ export default {
     onClick: Function,
   },
   methods: {
+    ...mapMutations([
+      constants.TOGGLE_SEARCH,
+      constants.SELECT_LINE,
+    ]),
     selectLine(line) {
-      this.$store.dispatch(constants.TOGGLE_SEARCH);
-      this.$store.dispatch(constants.SELECT_LINE, line);
+      this[constants.TOGGLE_SEARCH]();
+      this[constants.SELECT_LINE](line);
       if (typeof this.onClick === 'function') {
         this.onClick();
       }

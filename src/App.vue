@@ -19,6 +19,7 @@
 
 <script>
 import axios from 'axios';
+import { mapMutations } from 'vuex';
 import OpenOlhoVivoMap from './components/OpenOlhoVivoMap.vue';
 import UpdateDialog from './components/UpdateDialog.vue';
 import Header from './layout/Header.vue';
@@ -46,8 +47,9 @@ export default {
   },
   methods: {
     showUpdateNotification() {
-      this.$store.dispatch(constants.NOTIFICATION, 'Nova versão instalada!');
+      this[constants.NOTIFICATION]('Nova versão instalada!');
     },
+    ...mapMutations([constants.NOTIFICATION]),
   },
   components: {
     OpenOlhoVivoMap,

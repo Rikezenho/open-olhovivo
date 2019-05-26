@@ -77,7 +77,9 @@ import {
   LMap, LPolyline, LTileLayer, LPopup, LMarker, LControl,
 } from 'vue2-leaflet';
 import moment from 'moment';
-import { mapState, mapGetters } from 'vuex';
+import {
+  mapState, mapGetters, mapMutations, mapActions,
+} from 'vuex';
 import configs from '../configs';
 import constants from '../store/constants';
 
@@ -127,17 +129,12 @@ export default {
     };
   },
   methods: {
-    getLatLngPathsFromLine(lineNumber, direction) {
-      this.$store.dispatch(constants.GET_LINE_ROUTE, {
-        lineNumber,
-        direction,
-      });
-    },
-    setPositionMarkers(lineId) {
-      this.$store.dispatch(constants.GET_LINE_POSITIONS, {
-        lineId,
-      });
-    },
+    ...mapMutations([
+      constants.TOGGLE_LINE_DIRECTION,
+    ]),
+    ...mapActions([
+      constants.GET_LINE_ROUTE_AND_POSITIONS,
+    ]),
     fitPolyline() {
       const bounds = L.latLngBounds(this.latLngPathsObject);
       this.bounds = bounds;
@@ -152,11 +149,11 @@ export default {
       `;
     },
     loadMapAdditionalData() {
-      this.getLatLngPathsFromLine(this.selectedLine.number, this.selectedLine.direction);
-      this.setPositionMarkers(this.selectedLine.lineId);
+      this[constants.GET_LINE_ROUTE_AND_POSITIONS](this.selectedLine);
     },
     toggleDirection() {
-      this.$store.dispatch(constants.TOGGLE_LINE_DIRECTION);
+      this[constants.TOGGLE_LINE_DIRECTION]();
+      this.loadMapAdditionalData();
     },
     getUserPosition() {
       if ('geolocation' in navigator) {

@@ -16,6 +16,9 @@ export default {
   [constants.REQUEST_ERROR](state, payload) {
     state.error = payload;
   },
+  [constants.CLEAR_ERROR](state) {
+    state.error = '';
+  },
   [constants.SEARCH_LINES](state, payload) {
     state.linesFound = payload;
   },
@@ -25,9 +28,10 @@ export default {
   [constants.TOGGLE_LINE_DIRECTION](state) {
     const lineToSaveWithoutToggleLine = { ...state.selectedLine };
     delete lineToSaveWithoutToggleLine.toggleLine;
-    const newLine = { ...state.selectedLine.toggleLine };
 
+    const newLine = { ...state.selectedLine.toggleLine };
     newLine.toggleLine = lineToSaveWithoutToggleLine;
+
     state.selectedLine = newLine;
   },
   [constants.GET_LINE_ROUTE](state, payload) {
