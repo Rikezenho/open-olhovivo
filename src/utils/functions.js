@@ -11,7 +11,7 @@ const normalizeLineData = (line, lineBack = {}) => ({
   toggleLine: lineBack,
 });
 
-const isFavorited = lineId => !!store.getters.favorites.filter(
+const isFavorited = lineId => !!store.state.favorites.filter(
   item => item.lineId === lineId,
 ).length;
 

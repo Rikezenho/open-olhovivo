@@ -1,17 +1,17 @@
 <template>
   <v-container>
-    <div v-if="!currentLine().lineId">Busque uma linha para começar.</div>
+    <div v-if="!selectedLine.lineId">Busque uma linha para começar.</div>
     <div v-else>
       <div class="line-title-container">
         <h6 class="title line-title">
-          {{ currentLine().number }} - {{ currentLine().from }}/{{ currentLine().to }}
+          {{ selectedLine.number }} - {{ selectedLine.from }}/{{ selectedLine.to }}
         </h6>
       </div>
       <l-map :bounds="bounds" :zoom="zoom" :center="initialLocation">
         <l-control class="custom-control">
           <p @click="loadMapAdditionalData"><v-icon>refresh</v-icon></p>
         </l-control>
-        <l-polyline :lat-lngs="[latLngPaths()]" />
+        <l-polyline :lat-lngs="[latLngPaths]" />
         <l-tile-layer
         :key="tileProvider.name"
         :name="tileProvider.name"
@@ -20,7 +20,7 @@
         :attribution="tileProvider.attribution"
         layer-type="base"/>
           <l-marker
-            v-for="vehicle in vehicles()"
+            v-for="vehicle in positions"
             :lat-lng="[vehicle.py, vehicle.px]"
             :key="vehicle.p">
             <l-popup :content="popupContent(vehicle)"/>
@@ -54,9 +54,9 @@
           dark
           small
           color="orange"
-          @click="$utils.toggleFavorite(currentLine())"
+          @click="$utils.toggleFavorite(selectedLine)"
         >
-          <v-icon>{{ $utils.getFavoritedIcon(currentLine().lineId) }}</v-icon>
+          <v-icon>{{ $utils.getFavoritedIcon(selectedLine.lineId) }}</v-icon>
         </v-btn>
         <v-btn
           fab
@@ -77,6 +77,7 @@ import {
   LMap, LPolyline, LTileLayer, LPopup, LMarker, LControl,
 } from 'vue2-leaflet';
 import moment from 'moment';
+import { mapState, mapGetters } from 'vuex';
 import configs from '../configs';
 import constants from '../store/constants';
 
@@ -151,20 +152,11 @@ export default {
       `;
     },
     loadMapAdditionalData() {
-      this.getLatLngPathsFromLine(this.currentLine().number, this.currentLine().direction);
-      this.setPositionMarkers(this.currentLine().lineId);
+      this.getLatLngPathsFromLine(this.selectedLine.number, this.selectedLine.direction);
+      this.setPositionMarkers(this.selectedLine.lineId);
     },
     toggleDirection() {
       this.$store.dispatch(constants.TOGGLE_LINE_DIRECTION);
-    },
-    currentLine() {
-      return this.$store.getters.selectedLine;
-    },
-    vehicles() {
-      return this.$store.getters.positions;
-    },
-    latLngPaths() {
-      return this.$store.getters.latLngPaths;
     },
     getUserPosition() {
       if ('geolocation' in navigator) {
@@ -176,11 +168,14 @@ export default {
     },
   },
   computed: {
-    latLngPathsObject() {
-      return this.latLngPaths().map(
-        latLng => ({ lat: latLng[0], lng: latLng[1] }),
-      );
-    },
+    ...mapState([
+      'selectedLine',
+      'positions',
+      'latLngPaths',
+    ]),
+    ...mapGetters([
+      'latLngPathsObject',
+    ]),
   },
 };
 </script>

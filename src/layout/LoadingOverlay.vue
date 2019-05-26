@@ -11,13 +11,11 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
   name: 'LoadingOverlay',
-  computed: {
-    isLoading() {
-      return this.$store.getters.isLoading;
-    },
-  },
+  computed: mapState(['isLoading']),
 };
 </script>
 

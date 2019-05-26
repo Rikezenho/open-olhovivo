@@ -1,8 +1,5 @@
 export default {
-  isLoading: state => state.isLoading,
-  selectedLine: state => state.selectedLine,
-  positions: state => state.positions,
-  favorites: state => state.favorites,
-  latLngPaths: state => state.latLngPaths,
-  linesFound: state => state.linesFound,
+  latLngPathsObject: state => state.latLngPaths.map(
+    latLng => ({ lat: latLng[0], lng: latLng[1] }),
+  ),
 };

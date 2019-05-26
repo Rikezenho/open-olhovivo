@@ -12,14 +12,14 @@
         <v-list-group
         prepend-icon="star"
         value="true"
-        v-if="favorites().length">
+        v-if="favorites.length">
           <template v-slot:activator>
             <v-list-tile>
               <v-list-tile-title>Favoritos</v-list-tile-title>
             </v-list-tile>
           </template>
           <v-bus-item
-          v-for="favorite in favorites()"
+          v-for="favorite in favorites"
           :key="favorite.lineId"
           :line="favorite"
           :onClick="closeDrawer" />
@@ -74,10 +74,10 @@
           </v-list-tile>
         </v-list>
         <v-divider></v-divider>
-        <v-list three-line subheader v-if="linesFound().length">
-          <v-subheader>{{ linesFound().length }} resultado(s) encontrado(s)</v-subheader>
+        <v-list three-line subheader v-if="linesFound.length">
+          <v-subheader>{{ linesFound.length }} resultado(s) encontrado(s)</v-subheader>
           <v-bus-item
-          v-for="line in linesFound()"
+          v-for="line in linesFound"
           :key="line.cl"
           :line="line"
           :onClick="closeSearchDialog" />
@@ -91,6 +91,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import { repository } from '../../package.json';
 import constants from '../store/constants';
 import BusItem from '../components/BusItem.vue';
@@ -108,6 +109,10 @@ export default {
       searchDialog: this.$store.getters.searchDialog,
     };
   },
+  computed: mapState([
+    'linesFound',
+    'favorites',
+  ]),
   methods: {
     searchLines() {
       this.$store.dispatch(constants.SEARCH_LINES, this.search);
@@ -116,12 +121,6 @@ export default {
       if (this.search.length >= 4) {
         this.searchLines();
       }
-    },
-    linesFound() {
-      return this.$store.getters.linesFound;
-    },
-    favorites() {
-      return this.$store.getters.favorites;
     },
     openSearchDialog() {
       this.searchDialog = true;
