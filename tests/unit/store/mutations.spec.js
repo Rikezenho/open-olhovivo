@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import constants from '@/store/constants';
 import mutations from '@/store/mutations';
+import mocks from './mocks';
 
 describe('mutations', () => {
   it(`should block ui when ${constants.BLOCK_UI} is commited`, () => {
@@ -38,21 +39,71 @@ describe('mutations', () => {
   it(`should show lines when ${constants.SEARCH_LINES} is commited`, () => {
     const state = { linesFound: [] };
     const linesFound = [
-      {
-        number: '5106-21',
-        name: 'Vila Olímpia',
-      },
+      mocks.busLine,
     ];
     mutations[constants.SEARCH_LINES](state, linesFound);
-    expect(state.linesFound.length).to.equal(1);
+    expect(state.linesFound.length).to.equal(linesFound.length);
   });
   it(`should select line when ${constants.SELECT_LINE} is commited`, () => {
     const state = { selectedLine: [] };
-    const selectedLine = {
-      number: '5106-21',
-      name: 'Vila Olímpia',
+    mutations[constants.SELECT_LINE](state, mocks.busLine);
+    expect(state.selectedLine).to.deep.equal(mocks.busLine);
+  });
+  it(`should invert line direction when ${constants.TOGGLE_LINE_DIRECTION} is commited`, () => {
+    const toggledLine = mocks.busLine;
+    const currentLine = mocks.busLineReverse;
+
+    const state = {
+      selectedLine: {
+        ...currentLine,
+        toggleLine: toggledLine,
+      },
     };
-    mutations[constants.SELECT_LINE](state, selectedLine);
-    expect(state.selectedLine).to.deep.equal(selectedLine);
+
+    const expectedLine = {
+      ...toggledLine,
+      toggleLine: currentLine,
+    };
+
+    mutations[constants.TOGGLE_LINE_DIRECTION](state);
+    expect(state.selectedLine).to.deep.equal(expectedLine);
+  });
+  it(`should invert line direction when ${constants.TOGGLE_LINE_DIRECTION} is commited and keep the old one in 'toggleLine'`, () => {
+    const toggledLine = mocks.busLine;
+    const currentLine = mocks.busLineReverse;
+
+    const state = {
+      selectedLine: {
+        ...currentLine,
+        toggleLine: toggledLine,
+      },
+    };
+
+    mutations[constants.TOGGLE_LINE_DIRECTION](state);
+    expect(state.selectedLine.toggleLine).to.deep.equal(currentLine);
+  });
+  it(`should set some lat lngs when ${constants.GET_LINE_ROUTE} is commited`, () => {
+    const state = { latLngPaths: [] };
+    mutations[constants.GET_LINE_ROUTE](state, mocks.latLngPaths);
+    expect(state.latLngPaths).to.deep.equal(mocks.latLngPaths);
+  });
+  it(`should set some positions when ${constants.GET_LINE_POSITIONS} is commited`, () => {
+    const state = { positions: [] };
+    mutations[constants.GET_LINE_POSITIONS](state, mocks.busPositions);
+    expect(state.positions).to.deep.equal(mocks.busPositions);
+  });
+  it(`should set favorite when ${constants.SAVE_FAVORITE_LINE} is commited`, () => {
+    const state = { favorites: [] };
+    mutations[constants.SAVE_FAVORITE_LINE](state, mocks.busLine);
+    expect(state.favorites).to.deep.include.members([mocks.busLine]);
+  });
+  it(`should remove favorite when ${constants.REMOVE_FAVORITE_LINE} is commited`, () => {
+    const state = {
+      favorites: [
+        mocks.busLine,
+      ],
+    };
+    mutations[constants.REMOVE_FAVORITE_LINE](state, mocks.busLine.lineId);
+    expect(state.favorites).to.not.deep.include.members([mocks.busLine]);
   });
 });
