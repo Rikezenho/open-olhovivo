@@ -6,6 +6,9 @@ exports.config = {
       url: 'http://localhost:8080',
       show: true,
     },
+    Mochawesome: {
+      uniqueScreenshotNames: true,
+    },
   },
   include: {
     search: './tests/e2e/pageObjects/search.js',
@@ -24,7 +27,17 @@ exports.config = {
       './tests/e2e/step_definitions/map.steps.js',
     ],
   },
+  plugins: {
+    stepByStepReport: {
+      enabled: true,
+    },
+  },
   bootstrap: null,
-  mocha: {},
+  mocha: {
+    reporterOptions: {
+      reportDir: './output',
+      reportFilename: 'report',
+    },
+  },
   name: 'open-olhovivo',
 };
