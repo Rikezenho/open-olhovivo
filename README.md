@@ -26,7 +26,7 @@ Conta com uma API em Node.js e um front-end em Vue.js.
 - [x] Criar localStorage para guardar os favoritos
 - [x] Realizar a comunicação deste com a API
 - [ ] Unit tests com Jest
-- [ ] E2E tests com CodeceptJS
+- [x] E2E tests com CodeceptJS
 - [x] Transformar em um app PWA
 
 ### To-do (geral):
