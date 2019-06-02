@@ -25,6 +25,11 @@ describe('mutations', () => {
     mutations[constants.NOTIFICATION](state, notification);
     expect(state.notification).to.equal(notification);
   });
+  it(`should show new version notification when ${constants.NEW_VERSION_AVAILABLE} is commited`, () => {
+    const state = { newVersionAvailable: false };
+    mutations[constants.NEW_VERSION_AVAILABLE](state);
+    expect(state.newVersionAvailable).to.equal(true);
+  });
   it(`should show error when ${constants.REQUEST_ERROR} is commited`, () => {
     const state = { error: '' };
     const error = 'No routes found.';

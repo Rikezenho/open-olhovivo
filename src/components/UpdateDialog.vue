@@ -30,17 +30,12 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
   name: 'UpdateDialog',
-  created() {
-    document.addEventListener('updateAvailable', ({ detail }) => {
-      this.desiredVersion = detail.version;
-      this.dialog = true;
-    });
-  },
   data() {
     return {
-      desiredVersion: '',
       dialog: false,
     };
   },
@@ -49,5 +44,13 @@ export default {
       window.location.reload();
     },
   },
+  watch: {
+    newVersionAvailable(newValue, oldValue) {
+      if (newValue !== oldValue) {
+        this.dialog = newValue;
+      }
+    },
+  },
+  computed: mapState(['newVersionAvailable']),
 };
 </script>

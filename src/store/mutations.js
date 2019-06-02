@@ -13,6 +13,9 @@ export default {
   [constants.NOTIFICATION](state, payload) {
     state.notification = payload;
   },
+  [constants.NEW_VERSION_AVAILABLE](state) {
+    state.newVersionAvailable = true;
+  },
   [constants.REQUEST_ERROR](state, payload) {
     state.error = payload;
   },

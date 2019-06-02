@@ -16,6 +16,7 @@ export const initialState = {
   searchDialog: true,
   isLoading: false,
   error: null,
+  newVersionAvailable: false,
 };
 
 export const storeConfig = {

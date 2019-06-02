@@ -18,7 +18,6 @@
 </template>
 
 <script>
-import axios from 'axios';
 import { mapMutations } from 'vuex';
 import OpenOlhoVivoMap from './components/OpenOlhoVivoMap.vue';
 import UpdateDialog from './components/UpdateDialog.vue';
@@ -37,19 +36,12 @@ export default {
     );
 
     window.appVersion = versionJson.version;
-    const currentVersion = versionJson.version || '0.0.0';
-    axios.get('/version.json')
-      .then(({ data }) => {
-        if (data.version !== currentVersion) {
-          document.dispatchEvent(new CustomEvent('updateAvailable', { detail: { version: data.version } }));
-        }
-      });
   },
   methods: {
     showUpdateNotification() {
-      this[constants.NOTIFICATION]('Nova versão instalada!');
+      this[constants.NEW_VERSION_AVAILABLE]();
     },
-    ...mapMutations([constants.NOTIFICATION]),
+    ...mapMutations([constants.NEW_VERSION_AVAILABLE]),
   },
   components: {
     OpenOlhoVivoMap,
