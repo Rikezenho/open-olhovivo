@@ -14,6 +14,14 @@ exports.config = {
     map: './tests/e2e/pageObjects/map.js',
     app: './tests/e2e/pageObjects/app.js',
   },
+  gherkin: {
+    features: './tests/e2e/features/*.feature',
+    steps: [
+      './tests/e2e/step_definitions/steps.js',
+      './tests/e2e/step_definitions/menu.steps.js',
+      './tests/e2e/step_definitions/search.steps.js',
+    ],
+  },
   bootstrap: null,
   mocha: {},
   name: 'open-olhovivo',

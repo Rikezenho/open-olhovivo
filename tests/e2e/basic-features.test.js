@@ -10,20 +10,6 @@ Before((I) => {
   I.amOnPage('/');
 });
 
-Scenario('should be possible to show and hide menu', (I, menu) => {
-  menu.open();
-  menu.close();
-})
-  .retry(3)
-  .tag('@menu');
-
-Scenario('should be possible to show and hide search dialog', (I, search) => {
-  search.openDialog();
-  search.closeDialog();
-})
-  .retry(3)
-  .tag('@search');
-
 Scenario(`should search for ${lineToSearch.number} and return 2 results`, (I, search) => {
   search.doSearch(lineToSearch.number);
   I.seeNumberOfElements(search.fields.resultItem, 2);
