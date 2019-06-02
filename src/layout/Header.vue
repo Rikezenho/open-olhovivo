@@ -4,6 +4,7 @@
       v-model="drawer"
       absolute
       temporary
+      id="menu"
     >
       <v-list>
         <v-list-tile>
@@ -12,7 +13,8 @@
         <v-list-group
         prepend-icon="star"
         value="true"
-        v-if="favorites.length">
+        v-if="favorites.length"
+        id="menu-favorites">
           <template v-slot:activator>
             <v-list-tile>
               <v-list-tile-title>Favoritos</v-list-tile-title>
@@ -33,23 +35,30 @@
       </v-list>
     </v-navigation-drawer>
     <v-toolbar app>
-      <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+      <v-toolbar-side-icon @click.stop="drawer = !drawer" id="menu-trigger"></v-toolbar-side-icon>
       <v-toolbar-title class="headline text-uppercase">
         <span>OPEN</span><span class="font-weight-light"> OLHO VIVO</span>
       </v-toolbar-title>
       <v-spacer />
       <v-toolbar-items dense>
-        <v-btn flat @click="openSearchDialog"><v-icon>search</v-icon></v-btn>
+        <v-btn
+          flat
+          @click="openSearchDialog"
+          id="search-dialog-trigger"
+        >
+          <v-icon>search</v-icon>
+        </v-btn>
       </v-toolbar-items>
     </v-toolbar>
     <v-dialog
     v-model="searchDialog"
     fullscreen
     hide-overlay
-    transition="dialog-bottom-transition">
+    transition="dialog-bottom-transition"
+    id="search-dialog">
       <v-card>
         <v-toolbar dark color="primary">
-          <v-btn icon dark @click="closeSearchDialog">
+          <v-btn icon dark @click="closeSearchDialog" id="search-dialog-close">
             <v-icon>close</v-icon>
           </v-btn>
           <v-toolbar-title>Busca de linhas</v-toolbar-title>
@@ -66,6 +75,7 @@
                       required
                       @input="handleInput"
                       block
+                      id="search-input"
                     ></v-text-field>
                   </form>
                 </v-flex>
@@ -74,7 +84,7 @@
           </v-list-tile>
         </v-list>
         <v-divider></v-divider>
-        <v-list three-line subheader v-if="linesFound.length">
+        <v-list three-line subheader v-if="linesFound.length" id="search-results">
           <v-subheader>{{ linesFound.length }} resultado(s) encontrado(s)</v-subheader>
           <v-bus-item
           v-for="line in linesFound"

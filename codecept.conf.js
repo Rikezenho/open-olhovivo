@@ -7,7 +7,11 @@ exports.config = {
       show: true,
     },
   },
-  include: {},
+  include: {
+    search: './tests/e2e/pageObjects/search.js',
+    menu: './tests/e2e/pageObjects/menu.js',
+    busItem: './tests/e2e/pageObjects/busItem.js',
+  },
   bootstrap: null,
   mocha: {},
   name: 'open-olhovivo',

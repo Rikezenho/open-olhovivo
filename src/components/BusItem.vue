@@ -15,9 +15,10 @@
       </v-list-tile-sub-title>
     </v-list-tile-content>
     <v-list-tile-action @click="$utils.toggleFavorite(line)">
-      <v-btn icon ripple>
+      <v-btn icon ripple class="bus-favorite-toggle">
         <v-icon
-        :color="favoritedColor(line.lineId) + 'lighten-1'">
+        :color="favoritedColor(line.lineId) + 'lighten-1'"
+        :title="$utils.isFavorited(line.lineId) ? 'Favoritado' : 'Não favoritado'">
           {{ $utils.getFavoritedIcon(line.lineId) }}
         </v-icon>
       </v-btn>
