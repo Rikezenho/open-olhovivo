@@ -15,9 +15,9 @@ const isFavorited = lineId => !!store.state.favorites.filter(
   item => item.lineId === lineId,
 ).length;
 
-const saveFavoriteLine = line => store.dispatch(constants.SAVE_FAVORITE_LINE, line);
+const saveFavoriteLine = line => store.commit(constants.SAVE_FAVORITE_LINE, line);
 
-const removeFavoriteLine = lineId => store.dispatch(constants.REMOVE_FAVORITE_LINE, lineId);
+const removeFavoriteLine = lineId => store.commit(constants.REMOVE_FAVORITE_LINE, lineId);
 
 const toggleFavorite = line => (isFavorited(line.lineId)
   ? removeFavoriteLine(line.lineId)
