@@ -96,7 +96,9 @@ export default {
     LControl,
   },
   created() {
-    this.loadMapAdditionalData();
+    if (this.selectedLine && this.selectedLine.lineId) {
+      this.loadMapAdditionalData();
+    }
   },
   mounted() {
     this.getUserPosition();
