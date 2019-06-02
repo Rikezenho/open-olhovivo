@@ -5,7 +5,7 @@ module.exports = {
     favorite: '.bus-favorite-toggle',
   },
   toggleFavorite(baseSelector) {
-    I.click(`${baseSelector} ${this.fields.favorite}`);
     I.wait(1);
+    I.click(`${baseSelector} ${this.fields.favorite}`);
   },
 };

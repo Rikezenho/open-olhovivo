@@ -23,6 +23,5 @@ module.exports = {
   },
   refresh() {
     I.click(this.fields.refresh);
-    app.waitUntilFinishLoad();
   },
 };

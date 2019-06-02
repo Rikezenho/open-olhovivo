@@ -25,8 +25,10 @@ module.exports = {
     app.waitUntilFinishLoad();
   },
   selectResult(selector = this.fields.resultItem) {
+    I.waitForVisible(selector, 10);
     I.click(selector);
     app.waitUntilFinishLoad();
+    I.waitForInvisible(this.fields.closeDialog, 10);
   },
   toggleResultFavorite(selector = this.fields.resultItem) {
     busItem.toggleFavorite(selector);

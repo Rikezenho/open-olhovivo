@@ -20,6 +20,8 @@ exports.config = {
       './tests/e2e/step_definitions/steps.js',
       './tests/e2e/step_definitions/menu.steps.js',
       './tests/e2e/step_definitions/search.steps.js',
+      './tests/e2e/step_definitions/favorite.steps.js',
+      './tests/e2e/step_definitions/map.steps.js',
     ],
   },
   bootstrap: null,

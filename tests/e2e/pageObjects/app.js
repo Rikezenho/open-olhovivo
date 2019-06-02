@@ -5,7 +5,6 @@ module.exports = {
     loading: '#loading-overlay',
   },
   waitUntilFinishLoad() {
-    I.wait(1);
-    I.waitForInvisible(this.fields.loading);
+    I.waitForInvisible(this.fields.loading, 10);
   },
 };
