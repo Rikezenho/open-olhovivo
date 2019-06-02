@@ -2,7 +2,7 @@
 
 [< Voltar](../README.md)
 
-BASE_URL: https://open-olhovivo-api.rikezenho.now.sh
+BASE_URL: https://open-olhovivo.netlify.com/.netlify/functions/api
 
 path|método|descrição|
 ---|---|---

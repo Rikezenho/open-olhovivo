@@ -1,6 +1,6 @@
 {
   "name": "open-olhovivo",
-  "version": "0.3.6",
+  "version": "0.4.0",
   "private": true,
   "author": {
     "name": "Henrique Kuwai",
@@ -20,26 +20,28 @@
     "serve": "node bumpVersion.js && cross-env NODE_ENV=development vue-cli-service serve",
     "build": "node bumpVersion.js && cross-env NODE_ENV=production vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "api": "cd server && yarn start",
-    "buildAndStartServer:all": "concurrently --kill-others --prefix-colors bgCyan,bgMagenta \"npm:build\" \"npm:api\"",
-    "start": "concurrently --kill-others --prefix-colors bgCyan,bgMagenta \"npm:serve\" \"npm:api\"",
+    "start": "netlify dev --live",
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "npx codeceptjs run --steps --reporter mochawesome",
     "commit": "git-cz"
   },
-  "workspaces": [
-    "server"
-  ],
   "dependencies": {
+    "@3846masa/axios-cookiejar-support": "^0.4.2",
     "axios": "^0.18.0",
+    "body-parser": "^1.18.3",
     "concurrently": "^4.1.0",
     "core-js": "^2.6.5",
+    "cors": "^2.8.5",
     "express": "^4.16.4",
     "leaflet": "^1.4.0",
     "mocha": "5.2.0",
     "mochawesome": "^3.1.2",
     "moment": "^2.24.0",
+    "netlify-cli": "^2.11.19",
+    "nodemon": "^1.18.10",
     "register-service-worker": "^1.6.2",
+    "serverless-http": "^2.0.2",
+    "tough-cookie": "^3.0.1",
     "vue": "^2.6.6",
     "vue-router": "^3.0.1",
     "vue2-leaflet": "^2.0.3",

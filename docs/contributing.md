@@ -2,7 +2,7 @@
 
 [< Voltar](../README.md)
 
-Clone o projeto, instale as dependências (rode `yarn` na raiz do projeto, pois este projeto utiliza de [Yarn Workspaces](https://yarnpkg.com/en/docs/workspaces)).
+Clone o projeto, instale as dependências (rode `yarn` ou `npm i` na raiz do projeto).
 
 Depois, inicie o back-end e o front-end com o comando:
 ```
@@ -13,6 +13,8 @@ Para buildar o projeto para produção, execute:
 ```
 yarn build
 ```
+
+O back-end, na verdade, está utilizando Lambda Functions hospedadas no Netlify. Sendo assim, basta subir para o Netlify que tudo funcionará corretamente.
 
 ## Padrão de commits
 
