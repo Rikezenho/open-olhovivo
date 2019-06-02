@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-loading-overlay />
+    <v-loading-overlay id="loading-overlay" />
     <v-header />
     <v-update-dialog />
     <v-content>

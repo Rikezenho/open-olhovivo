@@ -1,4 +1,4 @@
-const { I, busItem } = inject();
+const { I, busItem, app } = inject();
 
 module.exports = {
   fields: {
@@ -16,14 +16,17 @@ module.exports = {
   },
   closeDialog() {
     I.click(this.fields.closeDialog);
+    I.waitForInvisible(this.fields.closeDialog);
   },
   doSearch(term) {
+    this.openDialog();
     I.waitForElement(this.fields.input);
     I.fillField(this.fields.input, term);
-    I.wait(1);
+    app.waitUntilFinishLoad();
   },
   selectResult(selector = this.fields.resultItem) {
     I.click(selector);
+    app.waitUntilFinishLoad();
   },
   toggleResultFavorite(selector = this.fields.resultItem) {
     busItem.toggleFavorite(selector);

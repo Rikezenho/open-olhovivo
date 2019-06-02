@@ -3,13 +3,13 @@
     <div v-if="!selectedLine.lineId">Busque uma linha para começar.</div>
     <div v-else>
       <div class="line-title-container">
-        <h6 class="title line-title">
+        <h6 class="title line-title" id="map-line-title">
           {{ selectedLine.number }} - {{ selectedLine.from }}/{{ selectedLine.to }}
         </h6>
       </div>
-      <l-map :bounds="bounds" :zoom="zoom" :center="initialLocation">
+      <l-map :bounds="bounds" :zoom="zoom" :center="initialLocation" id="map">
         <l-control class="custom-control">
-          <p @click="loadMapAdditionalData"><v-icon>refresh</v-icon></p>
+          <p @click="loadMapAdditionalData" id="map-refresh"><v-icon>refresh</v-icon></p>
         </l-control>
         <l-polyline :lat-lngs="[latLngPaths]" />
         <l-tile-layer
@@ -44,6 +44,7 @@
             color="indigo darken-2"
             dark
             fab
+            id="map-speed-dial-toggle"
           >
             <v-icon>more_horiz</v-icon>
             <v-icon>close</v-icon>
@@ -55,6 +56,7 @@
           small
           color="orange"
           @click="$utils.toggleFavorite(selectedLine)"
+          id="map-toggle-favorite"
         >
           <v-icon>{{ $utils.getFavoritedIcon(selectedLine.lineId) }}</v-icon>
         </v-btn>
@@ -64,6 +66,7 @@
           small
           color="indigo"
           @click="toggleDirection"
+          id="map-toggle-direction"
         >
           <v-icon>swap_horiz</v-icon>
         </v-btn>

@@ -12,6 +12,10 @@ module.exports = {
     I.click(this.fields.menuBtn);
     I.waitForVisible(this.fields.menu);
   },
+  close() {
+    I.click('.v-overlay--active');
+    I.waitForInvisible('.v-overlay--active');
+  },
   toggleFavorite(selector = this.fields.favoriteListItem) {
     busItem.toggleFavorite(selector);
   },

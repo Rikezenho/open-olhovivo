@@ -11,6 +11,8 @@ exports.config = {
     search: './tests/e2e/pageObjects/search.js',
     menu: './tests/e2e/pageObjects/menu.js',
     busItem: './tests/e2e/pageObjects/busItem.js',
+    map: './tests/e2e/pageObjects/map.js',
+    app: './tests/e2e/pageObjects/app.js',
   },
   bootstrap: null,
   mocha: {},
