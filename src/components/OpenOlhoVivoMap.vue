@@ -163,8 +163,7 @@ export default {
     getUserPosition() {
       if ('geolocation' in navigator) {
         navigator.geolocation.watchPosition((position) => {
-          this.userCoords[0] = position.coords.latitude;
-          this.userCoords[1] = position.coords.longitude;
+          this.userCoords = [position.coords.latitude, position.coords.longitude];
         }, err => console.log(err));
       }
     },
