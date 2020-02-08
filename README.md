@@ -10,10 +10,12 @@ Pode ser utilizado também como uma PWA!
 
 ## WORK IN PROGRESS!
 
----
-
 ## Documentações
 
 * [Open OlhoVivo API](./docs/api.md)
 * [Contributing](./docs/contributing.md)
 * [Testing](./docs/testing.md)
+
+## Licença
+
+[GPL-3.0](./LICENSE)
