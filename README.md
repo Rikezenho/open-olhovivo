@@ -16,6 +16,13 @@ Pode ser utilizado também como uma PWA!
 * [Contributing](./docs/contributing.md)
 * [Testing](./docs/testing.md)
 
+## Contributors
+
+[//]: contributor-faces
+<a href="https://github.com/Rikezenho"><img src="https://avatars3.githubusercontent.com/u/932808?v=4" title="Rikezenho" width="80" height="80"></a>
+
+[//]: contributor-faces
+
 ## Licença
 
 [GPL-3.0](./LICENSE)

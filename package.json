@@ -25,7 +25,8 @@
     "start": "concurrently --kill-others --prefix-colors bgCyan,bgMagenta \"npm:serve\" \"npm:api\"",
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "npx codeceptjs run --steps --reporter mochawesome",
-    "commit": "git-cz"
+    "commit": "git-cz",
+    "updateContributors": "contributor-faces"
   },
   "workspaces": [
     "server"
@@ -33,6 +34,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "concurrently": "^4.1.0",
+    "contributor-faces": "^1.0.3",
     "core-js": "^2.6.5",
     "express": "^4.16.4",
     "leaflet": "^1.4.0",
