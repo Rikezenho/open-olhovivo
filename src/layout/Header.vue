@@ -93,7 +93,7 @@
           :onClick="closeSearchDialog" />
         </v-list>
         <v-list three-line subheader v-else>
-          <v-subheader>Nenhum resultado encontrado.</v-subheader>
+          <v-subheader v-if="search">Nenhum resultado encontrado para "{{search}}".</v-subheader>
         </v-list>
       </v-card>
     </v-dialog>
@@ -101,7 +101,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import { mapState, mapActions, mapMutations } from 'vuex';
 import { repository } from '../../package.json';
 import constants from '../store/constants';
 import BusItem from '../components/BusItem.vue';
@@ -124,13 +124,19 @@ export default {
     'favorites',
   ]),
   methods: {
+    ...mapMutations([constants.RESET_LINES]),
     ...mapActions([constants.SEARCH_LINES]),
     searchLines() {
       this[constants.SEARCH_LINES](this.search);
     },
+    resetLines() {
+      this[constants.RESET_LINES]();
+    },
     handleInput() {
       if (this.search.length >= 4) {
         this.searchLines();
+      } else {
+        this.resetLines();
       }
     },
     openSearchDialog() {

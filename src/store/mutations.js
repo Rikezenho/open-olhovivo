@@ -28,6 +28,9 @@ export default {
   [constants.SELECT_LINE](state, payload) {
     state.selectedLine = payload;
   },
+  [constants.RESET_LINES](state) {
+    state.linesFound = [];
+  },
   [constants.TOGGLE_LINE_DIRECTION](state) {
     const lineToSaveWithoutToggleLine = { ...state.selectedLine };
     delete lineToSaveWithoutToggleLine.toggleLine;
