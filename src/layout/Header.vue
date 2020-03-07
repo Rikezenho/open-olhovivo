@@ -92,7 +92,7 @@
           :line="line"
           :onClick="closeSearchDialog" />
         </v-list>
-        <v-list three-line subheader v-else v-bind="search">
+        <v-list three-line subheader v-else>
           <v-subheader v-if="search">Nenhum resultado encontrado para "{{search}}".</v-subheader>
         </v-list>
       </v-card>
