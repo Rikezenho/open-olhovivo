@@ -17,7 +17,7 @@ const urlBuscaLinhas = termosBusca => `${olhovivo.buscaLinhas}?termosBusca=${ter
 const urlPrevisaoLinha = codigoLinha => `${olhovivo.previsaoLinha}?codigoLinha=${codigoLinha}`;
 const urlPosicaoLinha = codigoLinha => `${olhovivo.posicaoLinha}?codigoLinha=${codigoLinha}`;
 const urlSpTransLinha = codigoLinha => `${sptrans.getLinha}?cdp=${codigoLinha}`;
-const urlSpTransLinhaRota = (linhaNumber, direction) => `http://201.63.30.42:8080/geoserver/SIM/wms?service=WFS&version=2.0&request=GetFeature&typeName=SIM%3ALinhas&outputFormat=application%2Fjson&CQL_FILTER=LINHA%20LIKE%20%27%25${linhaNumber}%25%27%20AND%20SENTIDO%20%3D%20${direction}`;
+const urlSpTransLinhaRota = (linhaNumber, direction) => `https://maps.sptrans.com.br/geoserver/SIM/wms?service=WFS&version=2.0&request=GetFeature&typeName=SIM%3ALinhas&outputFormat=application%2Fjson&CQL_FILTER=LINHA%20LIKE%20%27%25${linhaNumber}%25%27%20AND%20SENTIDO%20%3D%20${direction}`;
 
 module.exports = {
   olhovivo,
