@@ -3,7 +3,7 @@ const pkg = require('./package.json');
 
 const API_URLS = {
   development: 'http://localhost:3000',
-  production: 'https://open-olhovivo-api.rikezenho.now.sh',
+  production: 'https://open-olhovivo-api-rikezenho.vercel.app',
 };
 
 const API_URL = process.env.NODE_ENV === 'development' ? API_URLS.development : API_URLS.production;
