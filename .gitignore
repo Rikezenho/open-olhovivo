@@ -22,3 +22,4 @@ yarn-error.log*
 version.json
 
 output
+.vercel
